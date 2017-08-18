@@ -1,0 +1,58 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+
+// import twEmoji from 'twemoji';
+// import { Card, Col, Row } from 'react-materialize';
+import s from './BoardRow.css';
+// import avatar from './discord-avatar-default.png';
+
+/*
+  This is an experiment to switch to FlexBox.
+*/
+
+@withStyles(s)
+class BoardRow extends React.Component {
+  static propTypes = {
+    player: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      avatarURL: PropTypes.string.isRequired,
+      tag: PropTypes.string.isRequired,
+    }).isRequired,
+  };
+
+  render() {
+    const { avatarURL, tag } = this.props.player;
+    return (
+      <div className={s.root}>
+        <div className={s.avatarCap}>
+          <img alt={`Player ${tag}`} className={s.avatar} src={avatarURL} />
+        </div>
+        <div className={s.infoGrid}>
+          <div className={s.tag}>
+            {tag}
+          </div>
+          <div className={s.stats}>
+            <div>
+              <span>1</span>
+              <br />
+              <span>Wins</span>
+            </div>
+            <div>
+              <span>2</span>
+              <br />
+              <span>Games</span>
+            </div>
+            <div>
+              <span>3</span>
+              <br />
+              <span>Points</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default BoardRow;

@@ -1,0 +1,17 @@
+@import '../variables.css';
+
+.root {
+  color: white;
+  background-color: var(--black);
+  margin: 12px;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 2px;
+}
+
+.filterContainer {
+  display: flex;
+
+  & > div:not(:last-child) {
+    padding-right: 1rem;
+  }
+}

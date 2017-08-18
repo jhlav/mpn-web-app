@@ -8,10 +8,27 @@
  */
 
 import sequelize from '../sequelize';
+import DiscordUser from './DiscordUser';
+import Game from './Game';
+import GameEntry from './GameEntry';
 import User from './User';
 import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
+
+Game.hasMany(GameEntry, {
+  foreignKey: 'id',
+  as: 'entries',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
+GameEntry.belongsTo(DiscordUser, {
+  foreignKey: 'id',
+  as: 'player',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',
@@ -39,4 +56,12 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserClaim, UserProfile };
+export {
+  DiscordUser,
+  Game,
+  GameEntry,
+  User,
+  UserLogin,
+  UserClaim,
+  UserProfile,
+};

@@ -1,0 +1,150 @@
+.header {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+
+  & > .number_id {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    background-color: #0093ba;
+    font-size: 1.44rem;
+    position: relative;
+
+    & > span {
+      z-index: 1;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #0093ba;
+      border-top-left-radius: 25%;
+    }
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(250px, auto);
+  padding: 1em;
+  background-color: #ddd;
+
+  & > .playerGrid {
+    display: grid;
+    grid-template-columns: minmax(3, 1fr);
+
+    /* grid-auto-rows: (80px, 1fr); */
+    background-color: #bbb;
+    margin-bottom: 1em;
+
+    & > .first {
+      grid-auto-columns: 1fr;
+
+      & img {
+        max-width: 300px;
+      }
+    }
+
+    & > .second {
+      grid-auto-columns: 2fr;
+    }
+
+    & > .third {
+      font-size: 1.44em;
+    }
+
+    & > .fourth {
+      & > div {
+        display: flex;
+
+        & > div:first-child {
+          flex: 1;
+          text-align: right;
+          padding-right: 0.5em;
+        }
+
+        & > div:last-child {
+          flex: 1;
+          text-align: left;
+          padding-left: 0.5em;
+          font-size: 1.2em;
+          line-height: 28px;
+        }
+      }
+    }
+
+    & .firstPlace {
+      background-position: 0 0;
+    }
+
+    & .secondPlace {
+      background-position: 0 -40px;
+    }
+
+    & .thirdPlace {
+      background-position: 0 -80px;
+    }
+
+    & .fourthPlace {
+      background-position: 0 -120px;
+    }
+
+    & .firstPlace,
+    & .secondPlace,
+    & .thirdPlace,
+    & .fourthPlace {
+      width: 44px;
+      height: 40px;
+      display: block;
+      margin: 0 auto;
+      transform: scale(2.5, 2.5);
+    }
+
+    & > .first,
+    & > .second,
+    & > .third,
+    & > .fourth {
+      align-self: center;
+      text-align: center;
+      margin: 1.728em;
+    }
+
+    &:nth-child(2n+0) {
+      margin-left: 0.5em;
+    }
+
+    &:nth-child(2n+1) {
+      margin-right: 0.5em;
+    }
+  }
+
+  & .first {
+    grid-column: 1 / 2;
+    grid-row: 1;
+  }
+
+  & .second {
+    grid-column: 2 / 2;
+    grid-row: 1;
+  }
+
+  & .third {
+    grid-column: 1 / 2;
+    grid-row: 2;
+  }
+
+  & .fourth {
+    grid-column: 2 / 2;
+    grid-row: 2;
+  }
+}

@@ -20,6 +20,22 @@ const routes = {
       load: () => import(/* webpackChunkName: 'home' */ './home'),
     },
     {
+      path: '/boards',
+      load: () => import(/* webpackChunkName: 'boards' */ './boards'),
+      children: [
+        {
+          path: '/:category',
+        },
+        {
+          path: '/:category/:item',
+        },
+      ],
+    },
+    {
+      path: '/games',
+      load: () => import(/* webpackChunkName: 'games' */ './games'),
+    },
+    {
       path: '/contact',
       load: () => import(/* webpackChunkName: 'contact' */ './contact'),
     },

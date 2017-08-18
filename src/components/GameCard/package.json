@@ -1,0 +1,6 @@
+{
+  "name": "GameCard",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./GameCard.js"
+}

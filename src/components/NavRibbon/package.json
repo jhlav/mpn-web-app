@@ -1,0 +1,6 @@
+{
+  "name": "NavRibbon",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./NavRibbon.js"
+}

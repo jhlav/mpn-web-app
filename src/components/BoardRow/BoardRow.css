@@ -1,0 +1,113 @@
+@import '../variables.css';
+
+.root {
+  display: grid;
+  grid-template-columns: 128px auto;
+  grid-template-rows: 128px;
+  filter:
+    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.14))
+    drop-shadow(0 1px 5px rgba(0, 0, 0, 0.12))
+    drop-shadow(0 3px 1px rgba(0, 0, 0, 0.2));
+  margin: 0.62rem;
+
+  /* Platinum */
+  &:nth-of-type(1) .avatarCap::before {
+    /* border: 5px #e5e4e2 solid; */
+    background: linear-gradient(to bottom right, #fff300, #ff8a00);
+  }
+
+  &:nth-of-type(2) .avatarCap::before {
+    background: linear-gradient(to bottom right, #e5e3ea, #292c4a);
+  }
+
+  &:nth-of-type(3) .avatarCap::before {
+    background: linear-gradient(to bottom right, #f78e42, #b52c08);
+  }
+
+  /* Bronze */
+  &:nth-of-type(4) .avatarCap::before {
+    background: linear-gradient(to bottom right, #4fa121, #081000);
+  }
+
+  &:nth-of-type(1) .avatarCap img,
+  &:nth-of-type(2) .avatarCap img,
+  &:nth-of-type(3) .avatarCap img,
+  &:nth-of-type(4) .avatarCap img {
+    position: relative;
+    padding: 5px;
+  }
+}
+
+.avatarCap {
+  background-color: white;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+  }
+}
+
+.avatar {
+  border-radius: 50%;
+  height: 128px;
+  width: 128px;
+}
+
+.infoGrid {
+  align-items: center;
+  background-color: white;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 64px 64px;
+}
+
+.tag {
+  grid-column: 1;
+  grid-row-start: span 2;
+  font-size: 1.2rem;
+  justify-self: center;
+}
+
+.stats {
+  display: inline-grid;
+  grid-column: 2;
+  grid-row-start: span 2;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  justify-content: space-around;
+
+  & > div {
+    text-align: center;
+  }
+
+  & > div > span:first-of-type {
+    font-weight: 400;
+  }
+
+  & > div > span:last-of-type {
+    font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+    font-weight: 300;
+  }
+}
+
+@media (--screen-xs-min) {
+  .tag {
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: a;
+  }
+
+  .stats {
+    grid-row: 2;
+    grid-column-start: 1;
+    grid-column-end: b;
+  }
+}

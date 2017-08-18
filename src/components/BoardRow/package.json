@@ -1,0 +1,6 @@
+{
+  "name": "BoardRow",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./BoardRow.js"
+}
