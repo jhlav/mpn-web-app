@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
+import emoji from 'react-easy-emoji';
 // import twEmoji from 'twemoji';
 // import { Card, Col, Row } from 'react-materialize';
 import s from './BoardRow.css';
-// import avatar from './discord-avatar-default.png';
-
-/*
-  This is an experiment to switch to FlexBox.
-*/
+import avatar from './discord-avatar-default.png';
 
 @withStyles(s)
 class BoardRow extends React.Component {
@@ -26,11 +23,15 @@ class BoardRow extends React.Component {
     return (
       <div className={s.root}>
         <div className={s.avatarCap}>
-          <img alt={`Player ${tag}`} className={s.avatar} src={avatarURL} />
+          <img
+            alt={`Player ${tag}`}
+            className={s.avatar}
+            src={avatarURL || avatar}
+          />
         </div>
         <div className={s.infoGrid}>
           <div className={s.tag}>
-            {tag}
+            {emoji(tag.replace(/(\r\n|\n|\r)/gm, ''))}
           </div>
           <div className={s.stats}>
             <div>
