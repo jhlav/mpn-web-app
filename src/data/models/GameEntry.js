@@ -3,15 +3,15 @@ import Model from '../sequelize';
 
 const GameEntry = Model.define('GameEntry', {
   character: {
-    type: DataType.STRING(31),
+    type: DataType.STRING(23),
   },
 
   coins: {
-    type: DataType.INTEGER,
+    type: DataType.INTEGER(3),
   },
 
   stars: {
-    type: DataType.INTEGER,
+    type: DataType.INTEGER(3),
   },
 });
 

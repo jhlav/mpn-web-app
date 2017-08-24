@@ -9,15 +9,15 @@ const Game = Model.define('Game', {
   },
 
   game: {
-    type: DataType.STRING(31),
+    type: DataType.STRING(23),
   },
 
   gamemode: {
-    type: DataType.STRING(31),
+    type: DataType.STRING(23),
   },
 
   platform: {
-    type: DataType.STRING(15),
+    type: DataType.STRING(7),
   },
 });
 

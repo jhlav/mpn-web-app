@@ -2,6 +2,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+
+import reactMDCSS from 'react-md/dist/react-md.red-light_blue.min.css';
 
 import GameCard from '../../components/GameCard';
 
@@ -51,4 +54,4 @@ function Games() {
   );
 }
 
-export default Games;
+export default withStyles(reactMDCSS)(Games);
