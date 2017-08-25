@@ -1,3 +1,5 @@
+import uuid from 'uuid/v1';
+
 import Game from '../models/Game';
 import GameType from '../types/GameType';
 
@@ -9,18 +11,37 @@ import GameType from '../types/GameType';
 
 const createGame = {
   type: GameType,
-  args: {},
+  args: {
+    input: {
+      type: new NonNull(
+        new InputObjectType({
+          name: 'CreateGameInput',
+          fields: {
+            game: {
+              type: new NonNull(StringType),
+              description: 'Which game in the series?  i.e \'Mario Party 1\'',
+            },
+            gamemode: {
+              type: new NonNull(StringType),
+              description: 'Which gamemode was played.',
+            },
+            platform: {
+              type: new NonNull(StringType),
+              description: 'Which platform the game is on.  Use \'n64\', \'gamecube\', or \'wii\'',
+            },
+          },
+        }),
+      ),
+    },
+  },
   async resolve(_, args) {
     const { input } = args;
     const data = Game.create({
-      id: _,
-      game: _,
-      gamemode: _,
-      platform: _,
+      id: uuid(),
+      game: input.game,
+      gamemode: input.gamemode,
+      platform: input.platform,
     })
-      // .then(
-      //   ()
-      // )
       .then(res => ({ ...res.dataValues }))
       .catch(error => console.warn(error));
   },
