@@ -1,0 +1,6 @@
+{
+  "name": "GameEntryCard",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./GameEntryCard.js"
+}

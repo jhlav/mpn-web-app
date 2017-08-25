@@ -11,7 +11,8 @@ import DiscordUserType from './DiscordUserType';
 const GameEntryType = new ObjectType({
   name: 'GameEntry',
   fields: {
-    id: { type: new NonNull(ID) },
+    gameId: { type: new NonNull(ID) },
+    place: { type: new NonNull(Integer) },
     character: { type: new NonNull(StringType) },
     coins: { type: new NonNull(Integer) },
     stars: { type: new NonNull(Integer) },

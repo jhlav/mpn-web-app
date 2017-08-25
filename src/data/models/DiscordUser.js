@@ -14,7 +14,7 @@ const DiscordUser = Model.define(
   'DiscordUser',
   {
     id: {
-      type: DataType.STRING(31),
+      type: DataType.STRING(50),
       primaryKey: true,
     },
 
@@ -23,11 +23,11 @@ const DiscordUser = Model.define(
     },
 
     nickname: {
-      type: DataType.STRING(63),
+      type: DataType.STRING(100),
     },
 
     tag: {
-      type: DataType.STRING(127),
+      type: DataType.STRING(100),
     },
   },
   {

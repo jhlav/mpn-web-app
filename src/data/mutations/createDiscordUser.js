@@ -1,7 +1,7 @@
 import {
   GraphQLInputObjectType as InputObjectType,
-  GraphQLString as StringType,
   GraphQLNonNull as NonNull,
+  GraphQLString as StringType,
 } from 'graphql';
 // import uuid from 'node-uuid';
 // import validator from 'validator';

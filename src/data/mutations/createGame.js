@@ -1,7 +1,15 @@
+import {
+  GraphQLInputObjectType as InputObjectType,
+  GraphQLList as List,
+  GraphQLNonNull as NonNull,
+  GraphQLObjectType as ObjectType,
+  GraphQLString as StringType,
+} from 'graphql';
 import uuid from 'uuid/v1';
 
-import Game from '../models/Game';
+import { Game, GameEntry } from '../models';
 import GameType from '../types/GameType';
+import GameEntryInputType from '../types/GameEntryInputType';
 
 // game.setEntries([entry1, entry2, entry3, entry4])
 // spread from input args for entries
@@ -19,7 +27,7 @@ const createGame = {
           fields: {
             game: {
               type: new NonNull(StringType),
-              description: 'Which game in the series?  i.e \'Mario Party 1\'',
+              description: `Which game in the series?  i.e 'Mario Party 1'`,
             },
             gamemode: {
               type: new NonNull(StringType),
@@ -27,7 +35,11 @@ const createGame = {
             },
             platform: {
               type: new NonNull(StringType),
-              description: 'Which platform the game is on.  Use \'n64\', \'gamecube\', or \'wii\'',
+              description: `Which platform the game is on.  Use 'n64', 'gamecube', or 'wii'`,
+            },
+            entries: {
+              type: new List(GameEntryInputType),
+              description: 'There should be four entries total.',
             },
           },
         }),
@@ -36,14 +48,23 @@ const createGame = {
   },
   async resolve(_, args) {
     const { input } = args;
-    const data = Game.create({
-      id: uuid(),
-      game: input.game,
-      gamemode: input.gamemode,
-      platform: input.platform,
-    })
+    const id = await uuid();
+    const data = await Game.create(
+      {
+        id,
+        game: input.game,
+        gamemode: input.gamemode,
+        platform: input.platform,
+        entries: input.entries.map(entry => ({ gameId: id, ...entry })),
+      },
+      {
+        include: [{ model: GameEntry, as: 'entries' }],
+      },
+    )
       .then(res => ({ ...res.dataValues }))
-      .catch(error => console.warn(error));
+      .catch(error => ({ error }));
+
+    return data;
   },
 };
 

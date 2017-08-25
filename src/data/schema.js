@@ -13,6 +13,7 @@ import {
 } from 'graphql';
 
 import createDiscordUser from './mutations/createDiscordUser';
+import createGame from './mutations/createGame';
 
 import me from './queries/me';
 import news from './queries/news';
@@ -31,6 +32,7 @@ const schema = new Schema({
     name: 'Mutation',
     fields: {
       createDiscordUser,
+      createGame,
     },
   }),
 });

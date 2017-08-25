@@ -7,6 +7,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import reactMDCSS from 'react-md/dist/react-md.red-light_blue.min.css';
 
 import GameCard from '../../components/GameCard';
+import GameEntryCard from '../../components/GameEntryCard';
 
 const games = [
   {
@@ -46,12 +47,23 @@ const games = [
   },
 ];
 
-function Games() {
-  return (
-    <div style={{ backgroundColor: '#fbfbfb' }}>
-      {games.map(game => <GameCard key={game.id} game={game} />)}
-    </div>
-  );
+class Games extends React.Component {
+  componentDidMount() {
+    require('webfontloader').load({ // eslint-disable-line
+      google: {
+        families: ['Roboto', 'Roboto Condensed', 'Material Icons'],
+      },
+    });
+  }
+
+  render() {
+    return (
+      <div style={{ backgroundColor: '#fbfbfb' }}>
+        {/* games.map(game => <GameCard key={game.id} game={game} />) */}
+        <GameEntryCard />
+      </div>
+    );
+  }
 }
 
 export default withStyles(reactMDCSS)(Games);
