@@ -1,13 +1,15 @@
 /* eslint-disable no-shadow */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
+import { graphql } from 'react-apollo';
 import reactMDCSS from 'react-md/dist/react-md.red-light_blue.min.css';
 
 // import GameCard from '../../components/GameCard';
 import GameInputForm from '../../components/GameInputForm';
+import players from './players.graphql';
 
 // const games = [
 //   {
@@ -47,7 +49,21 @@ import GameInputForm from '../../components/GameInputForm';
 //   },
 // ];
 
+@graphql(players)
 class Games extends React.Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
+      players: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          avatarURL: PropTypes.string.isRequired,
+          tag: PropTypes.string.isRequired,
+        }),
+      ),
+    }).isRequired,
+  };
+
   componentDidMount() {
     require('webfontloader').load({ // eslint-disable-line
       google: {
@@ -57,10 +73,11 @@ class Games extends React.Component {
   }
 
   render() {
+    const { players } = this.props.data;
     return (
       <div style={{ backgroundColor: '#fbfbfb' }}>
         {/* games.map(game => <GameCard key={game.id} game={game} />) */}
-        <GameInputForm />
+        <GameInputForm players={players} />
       </div>
     );
   }

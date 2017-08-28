@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import Button from 'react-md/lib/Buttons';
@@ -14,7 +15,18 @@ import s from './GameInputForm.css';
 
 @withStyles(s)
 class GameInputForm extends React.Component {
+  static propTypes = {
+    players: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        avatarURL: PropTypes.string.isRequired,
+        tag: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
+  };
+
   render() {
+    const { players } = this.props;
     return (
       <Card className={s.root}>
         <CardTitle title="Record a Game" />
@@ -79,10 +91,10 @@ class GameInputForm extends React.Component {
           />
         </div>
         <div className={s.entryCards}>
-          <EntryCard place="1" />
-          <EntryCard place="2" />
-          <EntryCard place="3" />
-          <EntryCard place="4" />
+          <EntryCard place="1" players={players} />
+          <EntryCard place="2" players={players} />
+          <EntryCard place="3" players={players} />
+          <EntryCard place="4" players={players} />
         </div>
       </Card>
     );

@@ -18,10 +18,35 @@ import s from './EntryCard.css';
 class EntryCard extends Component {
   static propTypes = {
     place: PropTypes.oneOf([PropTypes.number, PropTypes.string]).isRequired,
+    players: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        avatarURL: PropTypes.string.isRequired,
+        tag: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isPlayerCPU: false,
+    };
+  }
+
+  generatePlayerList = (players = this.props.players) => {
+    const list = players.map(player => ({
+      leftAvatar: <Avatar src={player.avatarURL} />,
+      name: player.tag,
+      playerId: player.id,
+    }));
+
+    return list;
   };
 
   render() {
     const { place } = this.props;
+    const playerList = this.generatePlayerList();
     return (
       <div className={s.container}>
         <div className={s.playerAvatar}>
@@ -44,40 +69,7 @@ class EntryCard extends Component {
             className={cn(s.autocomplete)}
             id={`searchPeople-${place}`}
             placeholder="Search"
-            data={[
-              {
-                name: 'Sly',
-                leftAvatar: (
-                  <Avatar
-                    src={require('../BoardRow/discord-avatar-default.png')}
-                  />
-                ),
-              },
-              {
-                name: 'Slyearwerw',
-                leftAvatar: (
-                  <Avatar
-                    src={require('../BoardRow/discord-avatar-default.png')}
-                  />
-                ),
-              },
-              {
-                name: 'Swag',
-                leftAvatar: (
-                  <Avatar
-                    src={require('../BoardRow/discord-avatar-default.png')}
-                  />
-                ),
-              },
-              {
-                name: 'Jeffery 🐦🍃#4336',
-                leftAvatar: (
-                  <Avatar
-                    src={require('../BoardRow/discord-avatar-default.png')}
-                  />
-                ),
-              },
-            ]}
+            data={playerList}
             dataLabel="name"
             fullWidth
           />

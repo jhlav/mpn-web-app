@@ -18,6 +18,7 @@ export const SELECT_DATE = 'SELECT_DATE';
 
 /* Game Input Form Entries */
 // TODO Add constants for players.
+export const ENTRY_TOGGLE_CPU_PLAYER = 'ENTRY_TOGGLE_CPU_PLAYER';
 export const ENTRY_SELECT_CHARACTER = 'ENTRY_SELECT_CHARACTER';
 export const GET_IMAGE_URI_FOR_SELECTED_CHARACTER =
   'GET_IMAGE_URI_FOR_SELECTED_CHARACTER';
