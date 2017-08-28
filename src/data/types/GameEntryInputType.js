@@ -20,13 +20,20 @@ const GameEntryInputType = new NonNull(
       },
       coins: {
         type: new NonNull(Integer),
-        description: 'How many coins the player earned (999 limit).',
+        description: 'How many coins the player earned from the board.',
+      },
+      minigameCoins: {
+        type: new NonNull(Integer),
+        description: 'How many coins the player earned from minigames.',
       },
       stars: {
         type: new NonNull(Integer),
         description: `How many stars the player earned, usually less than 10.`,
       },
-      player: { type: StringType },
+      player: {
+        type: new NonNull(StringType),
+        description: 'The player - referenced by unique Discord ID.',
+      },
     },
   }),
 );

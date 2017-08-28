@@ -15,6 +15,8 @@ const GameType = new ObjectType({
     game: { type: new NonNull(StringType) },
     gamemode: { type: new NonNull(StringType) },
     platform: { type: new NonNull(StringType) },
+    board: { type: new NonNull(StringType) },
+    date: { type: new NonNull(StringType) },
     entries: { type: new List(GameEntryType) },
   },
 });

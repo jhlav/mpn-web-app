@@ -15,6 +15,7 @@ const GameEntryType = new ObjectType({
     place: { type: new NonNull(Integer) },
     character: { type: new NonNull(StringType) },
     coins: { type: new NonNull(Integer) },
+    minigameCoins: { type: new NonNull(Integer) },
     stars: { type: new NonNull(Integer) },
     player: { type: DiscordUserType },
   },

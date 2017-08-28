@@ -1,0 +1,92 @@
+@import '../variables.css';
+
+.root {
+  margin: 1rem 0.8rem;
+}
+
+.gameButtons {
+  align-items: center;
+  display: grid;
+  grid-template:
+    'selectMP1 selectMP2 selectMP3' 60px
+    'selectMP4 selectMP5 selectMP6' 60px
+    'selectMP7 selectMP8 selectMP9' 60px
+    / auto auto auto;
+  justify-content: space-evenly;
+
+  & button {
+    &:first-of-type {
+      grid-area: selectMP1;
+
+      & img {
+        width: 19px;
+      }
+    }
+
+    &:nth-of-type(2) {
+      grid-area: selectMP2;
+    }
+
+    &:nth-of-type(3) {
+      grid-area: selectMP3;
+
+      & img {
+        width: 21px;
+      }
+    }
+
+    &:nth-of-type(4) {
+      grid-area: selectMP4;
+
+      & img {
+        width: 26px;
+      }
+    }
+
+    &:nth-of-type(5) {
+      grid-area: selectMP5;
+
+      & img {
+        width: 23px;
+      }
+    }
+
+    &:nth-of-type(6) {
+      grid-area: selectMP6;
+    }
+
+    &:nth-of-type(7) {
+      grid-area: selectMP7;
+
+      & img {
+        width: 26px;
+      }
+    }
+
+    &:nth-of-type(8) {
+      grid-area: selectMP8;
+    }
+
+    &:nth-of-type(9) {
+      grid-area: selectMP9;
+    }
+
+    &:nth-of-type(2) img,
+    &:nth-of-type(6) img,
+    &:nth-of-type(8) img,
+    &:nth-of-type(9) img {
+      width: 20px;
+    }
+  }
+}
+
+.gameInputs {
+  display: grid;
+  padding: 1rem;
+}
+
+@media screen and (min-width: 992px) {
+  .entryCards {
+    display: grid;
+  }
+}

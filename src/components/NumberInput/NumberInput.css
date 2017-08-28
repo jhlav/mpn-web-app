@@ -1,0 +1,27 @@
+.root {
+  align-items: center;
+  display: grid;
+  grid-template:
+    'numInput numIncrement' 30px
+    'numInput numDecrement' 30px
+    / 60px 60px;
+
+  & > button {
+    height: 30px;
+    margin: 0;
+    min-width: unset;
+    padding: 0 16px;
+
+    &:first-of-type {
+      grid-area: numIncrement;
+    }
+
+    &:last-of-type {
+      grid-area: numDecrement;
+    }
+  }
+
+  & > div:only-of-type {
+    grid-area: numInput;
+  }
+}

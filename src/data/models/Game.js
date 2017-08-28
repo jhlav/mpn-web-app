@@ -19,6 +19,14 @@ const Game = Model.define('Game', {
   platform: {
     type: DataType.STRING(30),
   },
+
+  board: {
+    type: DataType.STRING(50),
+  },
+
+  date: {
+    type: DataType.STRING(30),
+  },
 });
 
 export default Game;

@@ -11,6 +11,7 @@ class NavRibbon extends React.Component {
 
   static propTypes = {
     goesBack: PropTypes.bool,
+    onClick: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     to: PropTypes.string.isRequired,
   };

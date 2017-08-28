@@ -1,0 +1,132 @@
+@import '../variables.css';
+
+.container {
+  align-content: center;
+  display: grid;
+  grid-template:
+    'playerAvatar playerAvatar cpuToggle cpuToggle cpuToggle placeIndex' 50px
+    'playerAvatar playerAvatar playerSearch playerSearch playerSearch playerSearch' 50px
+    'charAvatar charAvatar charSelect charSelect charSelect charSelect' 100px
+    'starIcon starInput starInput coinIcon coinInput coinInput' 80px
+    / 1fr 1fr 1fr 1fr 1fr 1fr;
+  padding: 1.728rem;
+  position: relative;
+  text-align: center;
+
+  & > div {
+    display: inline-grid;
+
+    &:not(.playerSearch, .charSelect) {
+      align-items: center;
+    }
+
+    &:not(.placeIndex, .playerSearch, .charSelect) {
+      justify-content: space-evenly;
+    }
+  }
+}
+
+@media (--screen-xs-min) {
+  .container {
+    grid-template:
+      'playerAvatar playerAvatar cpuToggle cpuToggle cpuToggle placeIndex' 50px
+      'playerAvatar playerAvatar playerSearch playerSearch playerSearch playerSearch' 50px
+      'charAvatar charAvatar charSelect charSelect charSelect charSelect' 100px
+      'starIcon starIcon starInput starInput starInput starInput' 80px
+      'coinIcon coinIcon coinInput coinInput coinInput coinInput' 80px
+      / 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+.playerAvatar {
+  grid-area: playerAvatar;
+
+  & > div {
+    height: 86px;
+    width: 86px;
+  }
+}
+
+.cpuToggle {
+  grid-area: cpuToggle;
+}
+
+.placeIndex {
+  grid-area: placeIndex;
+  justify-content: end;
+}
+
+.playerSearch {
+  grid-area: playerSearch;
+  justify-content: stretch;
+}
+
+.autocomplete {
+  & > div {
+    padding: 0;
+  }
+}
+
+.charAvatar {
+  grid-area: charAvatar;
+
+  & > img {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.charSelect {
+  align-items: baseline;
+  grid-area: charSelect;
+  justify-content: stretch;
+
+  & > div {
+    display: inline-grid;
+  }
+
+  & :global(.md-avatar) {
+    border: none;
+    border-radius: 0;
+  }
+
+  & :global(.md-avatar--default) {
+    background: none;
+  }
+}
+
+@media (--screen-xs-min) {
+  .playerSearch,
+  .charSelect {
+    padding-left: 1rem;
+  }
+}
+
+.starIcon {
+  grid-area: starIcon;
+}
+
+.starInput {
+  grid-area: starInput;
+}
+
+.coinIcon {
+  grid-area: coinIcon;
+}
+
+.starIcon > img,
+.coinIcon > img {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.14));
+  width: 48px;
+}
+
+.coinInput {
+  grid-area: coinInput;
+}
+
+@media (--screen-xs-min) {
+  .starInput,
+  .coinInput {
+    justify-content: end;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "GameInputForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./GameInputForm.js"
+}

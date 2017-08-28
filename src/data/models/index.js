@@ -23,12 +23,12 @@ Game.hasMany(GameEntry, {
   onDelete: 'cascade',
 });
 
-// GameEntry.belongsTo(DiscordUser, {
-//   foreignKey: 'id',
-//   as: 'player',
-//   onUpdate: 'cascade',
-//   onDelete: 'cascade',
-// });
+GameEntry.belongsTo(DiscordUser, {
+  foreignKey: 'discordUserId',
+  as: 'player',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import Button from 'react-md/lib/Buttons';
-import Card from 'react-md/lib/Cards';
+// import Card from 'react-md/lib/Cards';
 import { connect } from 'react-redux';
-import FontIcon from 'react-md/lib/FontIcons';
+// import FontIcon from 'react-md/lib/FontIcons';
 import SelectField from 'react-md/lib/SelectFields';
-import TextField from 'react-md/lib/TextFields';
+// import TextField from 'react-md/lib/TextFields';
 import Toolbar from 'react-md/lib/Toolbars';
 import s from './BoardHeader.css';
 
@@ -15,7 +15,7 @@ import s from './BoardHeader.css';
 @withStyles(s)
 class BoardHeader extends React.Component {
   static propTypes = {
-    category: PropTypes.string.isRequired,
+    // category: PropTypes.string.isRequired,
     isNavigating: PropTypes.bool.isRequired,
     navigate: PropTypes.func.isRequired,
   };

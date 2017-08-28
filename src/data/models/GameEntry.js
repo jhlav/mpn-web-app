@@ -14,6 +14,10 @@ const GameEntry = Model.define('GameEntry', {
     type: DataType.INTEGER(10),
   },
 
+  minigameCoins: {
+    type: DataType.INTEGER(10),
+  },
+
   stars: {
     type: DataType.INTEGER(10),
   },

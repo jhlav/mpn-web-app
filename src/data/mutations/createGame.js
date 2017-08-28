@@ -2,7 +2,6 @@ import {
   GraphQLInputObjectType as InputObjectType,
   GraphQLList as List,
   GraphQLNonNull as NonNull,
-  GraphQLObjectType as ObjectType,
   GraphQLString as StringType,
 } from 'graphql';
 import uuid from 'uuid/v1';
@@ -27,15 +26,23 @@ const createGame = {
           fields: {
             game: {
               type: new NonNull(StringType),
-              description: `Which game in the series?  i.e 'Mario Party 1'`,
+              description: `Which game in the series?  i.e 'Mario Party 1.'`,
             },
             gamemode: {
               type: new NonNull(StringType),
-              description: 'Which gamemode was played.',
+              description: `Which gamemode was played, i.e 'Battle Royale.'`,
             },
             platform: {
               type: new NonNull(StringType),
-              description: `Which platform the game is on.  Use 'n64', 'gamecube', or 'wii'`,
+              description: `Which platform the game is on.  Use 'n64', 'gamecube', or 'wii.'`,
+            },
+            board: {
+              type: new NonNull(StringType),
+              description: `Which board the game was played on, i.e 'Chilly Waters.'`,
+            },
+            date: {
+              type: new NonNull(StringType),
+              description: 'The date on which the game took place.',
             },
             entries: {
               type: new List(GameEntryInputType),
@@ -55,6 +62,8 @@ const createGame = {
         game: input.game,
         gamemode: input.gamemode,
         platform: input.platform,
+        board: input.board,
+        date: input.date,
         entries: input.entries.map(entry => ({ gameId: id, ...entry })),
       },
       {
