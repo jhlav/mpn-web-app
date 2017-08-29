@@ -17,7 +17,7 @@ import s from './EntryCard.css';
 
 class EntryCard extends Component {
   static propTypes = {
-    place: PropTypes.oneOf([PropTypes.number, PropTypes.string]).isRequired,
+    place: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     players: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -36,9 +36,11 @@ class EntryCard extends Component {
 
   generatePlayerList = (players = this.props.players) => {
     const list = players.map(player => ({
-      leftAvatar: <Avatar src={player.avatarURL} />,
+      leftAvatar: (
+        <Avatar alt={`Avatar for ${player.tag}`} src={player.avatarURL} />
+      ),
       name: player.tag,
-      playerId: player.id,
+      // playerId: player.id, TODO link id to selected value
     }));
 
     return list;

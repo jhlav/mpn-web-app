@@ -1,12 +1,33 @@
 @import '../variables.css';
 
 .root {
-  margin: 1rem 0.8rem;
+  padding: 1rem 0.8rem;
+}
+
+.upperPortion {
+  align-items: center;
+  display: grid;
+  grid-template:
+    'gameButtons gameInputs' auto
+    'gameButtons gameInputs' auto
+    / 50% 50%;
+  padding: 1.2rem 0 1.728rem;
+}
+
+@media (--screen-sm-min) {
+  .upperPortion {
+    grid-template:
+      'gameButtons gameButtons' auto
+      'gameInputs gameInputs' auto
+      / auto auto;
+  }
 }
 
 .gameButtons {
   align-items: center;
   display: grid;
+  grid-area: gameButtons;
+  grid-row-gap: 32px;
   grid-template:
     'selectMP1 selectMP2 selectMP3' 60px
     'selectMP4 selectMP5 selectMP6' 60px
@@ -82,11 +103,18 @@
 
 .gameInputs {
   display: grid;
+  grid-area: gameInputs;
   padding: 1rem;
 }
 
 @media screen and (min-width: 992px) {
   .entryCards {
     display: grid;
+    grid-gap: 1.44rem 1rem;
+    grid-template:
+      'firstEntryCard secondEntryCard' auto
+      'thirdEntryCard fourthEntryCard' auto
+      / auto auto;
+    padding: 1.2rem 0 1.44rem;
   }
 }

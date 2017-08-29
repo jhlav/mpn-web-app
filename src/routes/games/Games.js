@@ -10,6 +10,7 @@ import reactMDCSS from 'react-md/dist/react-md.red-light_blue.min.css';
 // import GameCard from '../../components/GameCard';
 import GameInputForm from '../../components/GameInputForm';
 import players from './players.graphql';
+import s from './Games.css';
 
 // const games = [
 //   {
@@ -50,6 +51,7 @@ import players from './players.graphql';
 // ];
 
 @graphql(players)
+@withStyles(s, reactMDCSS)
 class Games extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
@@ -75,12 +77,14 @@ class Games extends React.Component {
   render() {
     const { players } = this.props.data;
     return (
-      <div style={{ backgroundColor: '#fbfbfb' }}>
-        {/* games.map(game => <GameCard key={game.id} game={game} />) */}
-        <GameInputForm players={players} />
+      <div className={s.root}>
+        <div className={s.container}>
+          {/* games.map(game => <GameCard key={game.id} game={game} />) */}
+          <GameInputForm players={players} />
+        </div>
       </div>
     );
   }
 }
 
-export default withStyles(reactMDCSS)(Games);
+export default Games;
