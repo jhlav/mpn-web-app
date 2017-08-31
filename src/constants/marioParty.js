@@ -1,9 +1,9 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable import/prefer-default-export, global-require */
 
 export const getBoards = game => {
   switch (game) {
     case 'Mario Party 1':
-      return [
+      return ['Unknown'].concat([
         "Bowser's Magma Mountain",
         "DK's Jungle Adventure",
         'Eternal Star',
@@ -12,36 +12,36 @@ export const getBoards = game => {
         "Peach's Birthday Cake",
         "Wario's Battle Canyon",
         "Yoshi's Tropical Island",
-      ];
+      ]);
     case 'Mario Party 2':
-      return [
+      return ['Unknown'].concat([
         'Bowser Land',
         'Horror Land',
         'Mystery Land',
         'Pirate Land',
         'Space Land',
         'Western Land',
-      ];
+      ]);
     case 'Mario Party 3':
-      return [
+      return ['Unknown'].concat([
         'Chilly Waters',
         'Creepy Cavern',
         'Deep Blooper Sea',
         'Spiny Desert',
         "Waluigi's Island",
         'Woody Woods',
-      ];
+      ]);
     case 'Mario Party 4':
-      return [
+      return ['Unknown'].concat([
         "Boo's Haunted Bash",
         "Bowser's Gnarly Party",
         "Goomba's Greedy Gala",
         "Koopa's Seaside Soiree",
         "Shy Guy's Jungle Jam",
         "Toad's Midway Madness",
-      ];
+      ]);
     case 'Mario Party 5':
-      return [
+      return ['Unknown'].concat([
         'Bowser Nightmare',
         'Future Dream',
         'Pirate Dream',
@@ -49,36 +49,36 @@ export const getBoards = game => {
         'Sweet Dream',
         'Toy Dream',
         'Undersea Dream',
-      ];
+      ]);
     case 'Mario Party 6':
-      return [
+      return ['Unknown'].concat([
         'Castaway Bay',
         'Clockwork Castle',
         "E. Gadd's Garage",
         'Faire Square',
         'Snowflake Lake',
         'Towering Treetop',
-      ];
+      ]);
     case 'Mario Party 7':
-      return [
+      return ['Unknown'].concat([
         "Bowser's Enchanted Inferno!",
         'Grand Canal',
         'Neon Heights',
         'Pagoda Peak',
         'Pyramid Park',
         'Windmillville',
-      ];
+      ]);
     case 'Mario Party 8':
-      return [
+      return ['Unknown'].concat([
         "Bowser's Warped Orbit",
         "DK's Treetop Temple",
         "Goomba's Booty Boardwalk",
         "King Boo's Haunted Hideaway",
         "Koopa's Tycoon Town",
         "Shy Guy's Perplex Express",
-      ];
+      ]);
     case 'Mario Party 9':
-      return [
+      return ['Unknown'].concat([
         'Blooper Beach',
         'Bob-omb Factory',
         "Boo's Horror Castle",
@@ -86,15 +86,15 @@ export const getBoards = game => {
         "DK's Jungle Ruins",
         'Magma Mine',
         'Toad Road',
-      ];
+      ]);
     default:
-      return ['Error Retrieving Boards'];
+      return ['Unknown'];
   }
 };
 
 export const getCharacterImage = character => {
   switch (character) {
     default:
-      return ''; // TODO possibly path.resolve()-based logic
+      return require('../components/_SharedAssets/mushroom.svg'); // TODO possibly path.resolve()-based logic
   }
 };

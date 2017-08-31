@@ -12,11 +12,41 @@ import FontIcon from 'react-md/lib/FontIcons';
 import SelectField from 'react-md/lib/SelectFields';
 import Switch from 'react-md/lib/SelectionControls/Switch';
 
+import { connect } from 'react-redux';
 import NumberInput from '../NumberInput';
 import s from './EntryCard.css';
 
+import {
+  entryToggleCpuPlayer as toggleCPU,
+  entrySelectCharacter as selectCharacter,
+  entrySetStars as setStars,
+  entrySetCoins as setCoins,
+  entrySetMinigameCoins as setMGCoins,
+} from '../../actions/gameInputForm';
+
+@connect(
+  // state => ({
+  //   entryData:
+  //     state.gameInputForm.entries instanceof Map
+  //       ? state.gameInputForm.entries.get(this.props.place)
+  //       : {},
+  // }),
+  null,
+  dispatch => ({
+    toggleCPU: (entryId, isCPU) => dispatch(toggleCPU(entryId, isCPU)),
+    selectCharacter: (entryId, character) =>
+      dispatch(selectCharacter(entryId, character)),
+    setStars: (entryId, stars) => dispatch(setStars(entryId, stars)),
+    setCoins: (entryId, coins) => dispatch(setCoins(entryId, coins)),
+    setMGCoins: (entryId, mgCoins) => dispatch(setMGCoins(entryId, mgCoins)),
+  }),
+)
 class EntryCard extends Component {
   static propTypes = {
+    // entryData: PropTypes.oneOfType([
+    //   PropTypes.arrayOf(PropTypes.object),
+    //   PropTypes.instanceOf(Map),
+    // ]).isRequired,
     place: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     players: PropTypes.arrayOf(
       PropTypes.shape({
@@ -25,13 +55,12 @@ class EntryCard extends Component {
         tag: PropTypes.string.isRequired,
       }),
     ).isRequired,
+    selectCharacter: PropTypes.func.isRequired,
+    toggleCPU: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPlayerCPU: false,
-    };
+  componentWillMount() {
+    this.props.toggleCPU(this.props.place, false);
   }
 
   generatePlayerList = (players = this.props.players) => {
@@ -59,6 +88,7 @@ class EntryCard extends Component {
             id={`cpuToggle-${place}`}
             name={`cpuToggle-${place}`}
             label="CPU"
+            onChange={isCPU => this.props.toggleCPU(this.props.place, isCPU)}
           />
         </div>
         <div className={s.placeIndex}>
@@ -202,8 +232,8 @@ class EntryCard extends Component {
             ]}
             itemLabel="name"
             itemValue="name"
-            helpOnFocus
-            helpText="Select some character for me"
+            onChange={value =>
+              this.props.selectCharacter(this.props.place, value)}
           />
         </div>
         <div className={s.starIcon}>

@@ -15,14 +15,15 @@ import { getBoards, getCharacterImage } from '../constants/marioParty';
 const initialState = {
   game: '',
   board: '',
-  boardsAvailable: [],
+  boardsAvailable: ['Unknown'],
   date: new Date(),
   entries: new Map(),
 };
 
 const mergeMaps = (oldMap, payload) => {
   const newMap = new Map();
-  newMap.set(payload.entryId, { ...payload });
+  const { entryId, ...data } = payload;
+  newMap.set(entryId, data);
   return new Map([...oldMap, ...newMap]);
 };
 

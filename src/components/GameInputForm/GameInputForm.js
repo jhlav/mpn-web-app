@@ -19,11 +19,6 @@ import {
   selectGame,
   selectBoard,
   selectDate,
-  entryToggleCpuPlayer as toggleCPU,
-  entrySelectCharacter as selectCharacter,
-  entrySetStars as setStars,
-  entrySetCoins as setCoins,
-  entrySetMinigameCoins as setMGCoins,
 } from '../../actions/gameInputForm';
 
 @connect(
@@ -41,12 +36,6 @@ import {
     selectGame: game => dispatch(selectGame(game)),
     selectBoard: board => dispatch(selectBoard(board)),
     selectDate: date => dispatch(selectDate(date)),
-    toggleCPU: (entryId, isCPU) => dispatch(toggleCPU(entryId, isCPU)),
-    selectCharacter: (entryId, character) =>
-      dispatch(selectCharacter(entryId, character)),
-    setStars: (entryId, stars) => dispatch(setStars(entryId, stars)),
-    setCoins: (entryId, coins) => dispatch(setCoins(entryId, coins)),
-    setMGCoins: (entryId, mgCoins) => dispatch(setMGCoins(entryId, mgCoins)),
   }),
 )
 @withStyles(s)
@@ -116,6 +105,7 @@ class GameInputForm extends React.Component {
               value="Battle Royale"
             />
             <SelectField
+              defaultValue={this.props.boardsAvailable[0]}
               helpOnFocus
               helpText="Select a board"
               id="selectBoard"
