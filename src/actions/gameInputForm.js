@@ -13,15 +13,15 @@ import {
   ENTRY_SET_MINIGAME_COINS,
 } from '../constants';
 
-export const selectGame = game => ({
-  type: SELECT_GAME,
-  payload: { game },
-});
-
 export const getBoardsForSelectedGame = game => ({
   type: GET_BOARDS_FOR_SELECTED_GAME,
   payload: { game },
 });
+
+export const selectGame = game => dispatch => {
+  dispatch({ type: SELECT_GAME, payload: { game } });
+  dispatch(getBoardsForSelectedGame(game));
+};
 
 export const selectBoard = board => ({
   type: SELECT_BOARD,
