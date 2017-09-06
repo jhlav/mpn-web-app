@@ -5,6 +5,7 @@ import {
   GET_BOARDS_FOR_SELECTED_GAME,
   SELECT_BOARD,
   SELECT_DATE,
+  ENTRY_SELECT_PLAYER,
   ENTRY_TOGGLE_CPU_PLAYER,
   ENTRY_SELECT_CHARACTER,
   GET_IMAGE_URI_FOR_SELECTED_CHARACTER,
@@ -13,14 +14,9 @@ import {
   ENTRY_SET_MINIGAME_COINS,
 } from '../constants';
 
-export const getBoardsForSelectedGame = game => ({
-  type: GET_BOARDS_FOR_SELECTED_GAME,
-  payload: { game },
-});
-
 export const selectGame = game => dispatch => {
   dispatch({ type: SELECT_GAME, payload: { game } });
-  dispatch(getBoardsForSelectedGame(game));
+  dispatch({ type: GET_BOARDS_FOR_SELECTED_GAME, payload: { game } });
 };
 
 export const selectBoard = board => ({
@@ -33,20 +29,23 @@ export const selectDate = date => ({
   payload: { date },
 });
 
+export const entrySelectPlayer = (entryId, player) => ({
+  type: ENTRY_SELECT_PLAYER,
+  payload: { entryId, player },
+});
+
 export const entryToggleCpuPlayer = (entryId, isCPU) => ({
   type: ENTRY_TOGGLE_CPU_PLAYER,
   payload: { entryId, isCPU },
 });
 
-export const entrySelectCharacter = (entryId, character) => ({
-  type: ENTRY_SELECT_CHARACTER,
-  payload: { entryId, character },
-});
-
-export const getImageUriForSelectedCharacter = character => ({
-  type: GET_IMAGE_URI_FOR_SELECTED_CHARACTER,
-  payload: { character },
-});
+export const entrySelectCharacter = (entryId, character) => dispatch => {
+  dispatch({ type: ENTRY_SELECT_CHARACTER, payload: { entryId, character } });
+  dispatch({
+    type: GET_IMAGE_URI_FOR_SELECTED_CHARACTER,
+    payload: { entryId, character },
+  });
+};
 
 export const entrySetStars = (entryId, stars) => ({
   type: ENTRY_SET_STARS,

@@ -17,6 +17,7 @@ import createGame from './mutations/createGame';
 
 import me from './queries/me';
 import news from './queries/news';
+import player from './queries/player';
 import players from './queries/players';
 
 const schema = new Schema({
@@ -25,6 +26,7 @@ const schema = new Schema({
     fields: {
       me,
       news,
+      player,
       players,
     },
   }),

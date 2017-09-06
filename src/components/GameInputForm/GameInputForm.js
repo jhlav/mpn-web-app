@@ -45,6 +45,7 @@ class GameInputForm extends React.Component {
     boardsAvailable: PropTypes.arrayOf(PropTypes.String).isRequired,
     date: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string])
       .isRequired,
+    entries: PropTypes.instanceOf(Map).isRequired,
     // game: PropTypes.string.isRequired,
     players: PropTypes.arrayOf(
       PropTypes.shape({
@@ -59,7 +60,27 @@ class GameInputForm extends React.Component {
   };
 
   render() {
-    const { players } = this.props;
+    const { entries, players } = this.props;
+    const data = [];
+    const defaultEntry = {
+      character: '',
+      coins: '0',
+      imageURI: require('../_SharedAssets/mushroom.svg'),
+      isCPU: false,
+      minigameCoins: '0',
+      stars: '0',
+    };
+    if (entries instanceof Map) {
+      data[0] = entries.has('1') ? entries.get('1') : defaultEntry;
+      data[1] = entries.has('2') ? entries.get('2') : defaultEntry;
+      data[2] = entries.has('3') ? entries.get('3') : defaultEntry;
+      data[3] = entries.has('4') ? entries.get('4') : defaultEntry;
+    } else {
+      for (let i = 0; i < 4; i += 1) {
+        data.push(defaultEntry);
+      }
+    }
+    // TODO add active indication to buttons based on which game is selected
     return (
       <Card className={s.root}>
         <CardTitle title="Record a Game" />
@@ -127,10 +148,10 @@ class GameInputForm extends React.Component {
         </div>
         <Divider />
         <div className={s.entryCards}>
-          <EntryCard place="1" players={players} />
-          <EntryCard place="2" players={players} />
-          <EntryCard place="3" players={players} />
-          <EntryCard place="4" players={players} />
+          <EntryCard place="1" players={players} {...data[0]} />
+          <EntryCard place="2" players={players} {...data[1]} />
+          <EntryCard place="3" players={players} {...data[2]} />
+          <EntryCard place="4" players={players} {...data[3]} />
         </div>
       </Card>
     );

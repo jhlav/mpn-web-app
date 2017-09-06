@@ -7,7 +7,9 @@
     'playerAvatar playerAvatar cpuToggle cpuToggle cpuToggle placeIndex' 50px
     'playerAvatar playerAvatar playerSearch playerSearch playerSearch playerSearch' 50px
     'charAvatar charAvatar charSelect charSelect charSelect charSelect' 100px
-    'starIcon starInput starInput coinIcon coinInput coinInput' 80px
+    'coinIcon coinIcon coinInput coinInput coinInput coinInput' 80px
+    'mgCoinIcon mgCoinIcon mgCoinInput mgCoinInput mgCoinInput mgCoinInput' 80px
+    'starIcon starIcon starInput starInput starInput starInput' 80px
     / 1fr 1fr 1fr 1fr 1fr 1fr;
   padding: 1.728rem;
   position: relative;
@@ -23,18 +25,6 @@
     &:not(.placeIndex, .playerSearch, .charSelect) {
       justify-content: space-evenly;
     }
-  }
-}
-
-@media (--screen-xs-min) {
-  .container {
-    grid-template:
-      'playerAvatar playerAvatar cpuToggle cpuToggle cpuToggle placeIndex' 50px
-      'playerAvatar playerAvatar playerSearch playerSearch playerSearch playerSearch' 50px
-      'charAvatar charAvatar charSelect charSelect charSelect charSelect' 100px
-      'starIcon starIcon starInput starInput starInput starInput' 80px
-      'coinIcon coinIcon coinInput coinInput coinInput coinInput' 80px
-      / 1fr 1fr 1fr 1fr 1fr 1fr;
   }
 }
 
@@ -102,6 +92,22 @@
   }
 }
 
+.coinIcon {
+  grid-area: coinIcon;
+}
+
+.coinInput {
+  grid-area: coinInput;
+}
+
+.mgCoinIcon {
+  grid-area: mgCoinIcon;
+}
+
+.mgCoinInput {
+  grid-area: mgCoinInput;
+}
+
 .starIcon {
   grid-area: starIcon;
 }
@@ -110,23 +116,17 @@
   grid-area: starInput;
 }
 
-.coinIcon {
-  grid-area: coinIcon;
-}
-
-.starIcon > img,
-.coinIcon > img {
+.coinIcon > img,
+.mgCoinIcon > img,
+.starIcon > img {
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.14));
   width: 48px;
 }
 
-.coinInput {
-  grid-area: coinInput;
-}
-
 @media (--screen-xs-min) {
-  .starInput,
-  .coinInput {
-    justify-content: end;
+  .coinInput,
+  .mgCoinInput,
+  .starInput {
+    justify-content: end !important;
   }
 }

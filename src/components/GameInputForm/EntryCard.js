@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import cn from 'classnames';
+import { connect } from 'react-redux';
 
 import Avatar from 'react-md/lib/Avatars';
 import Autocomplete from 'react-md/lib/Autocompletes';
@@ -12,11 +13,12 @@ import FontIcon from 'react-md/lib/FontIcons';
 import SelectField from 'react-md/lib/SelectFields';
 import Switch from 'react-md/lib/SelectionControls/Switch';
 
-import { connect } from 'react-redux';
+import { characterList } from '../../constants/marioParty';
 import NumberInput from '../NumberInput';
 import s from './EntryCard.css';
 
 import {
+  entrySelectPlayer as selectPlayer,
   entryToggleCpuPlayer as toggleCPU,
   entrySelectCharacter as selectCharacter,
   entrySetStars as setStars,
@@ -24,30 +26,38 @@ import {
   entrySetMinigameCoins as setMGCoins,
 } from '../../actions/gameInputForm';
 
-@connect(
-  // state => ({
-  //   entryData:
-  //     state.gameInputForm.entries instanceof Map
-  //       ? state.gameInputForm.entries.get(this.props.place)
-  //       : {},
-  // }),
-  null,
-  dispatch => ({
-    toggleCPU: (entryId, isCPU) => dispatch(toggleCPU(entryId, isCPU)),
-    selectCharacter: (entryId, character) =>
-      dispatch(selectCharacter(entryId, character)),
-    setStars: (entryId, stars) => dispatch(setStars(entryId, stars)),
-    setCoins: (entryId, coins) => dispatch(setCoins(entryId, coins)),
-    setMGCoins: (entryId, mgCoins) => dispatch(setMGCoins(entryId, mgCoins)),
-  }),
-)
+@connect(null, dispatch => ({
+  toggleCPU: (entryId, isCPU) => dispatch(toggleCPU(entryId, isCPU)),
+  selectCharacter: (entryId, character) =>
+    dispatch(selectCharacter(entryId, character)),
+  selectPlayer: (entryId, playerTag) =>
+    dispatch(selectPlayer(entryId, playerTag)),
+  setStars: (entryId, stars) => dispatch(setStars(entryId, stars)),
+  setCoins: (entryId, coins) => dispatch(setCoins(entryId, coins)),
+  setMGCoins: (entryId, mgCoins) => dispatch(setMGCoins(entryId, mgCoins)),
+}))
 class EntryCard extends Component {
+  static defaultProps = {
+    character: '',
+    coins: '0',
+    imageURI: require('../_SharedAssets/mushroom.svg'),
+    isCPU: false,
+    minigameCoins: '0',
+    stars: '0',
+  };
+
   static propTypes = {
-    // entryData: PropTypes.oneOfType([
-    //   PropTypes.arrayOf(PropTypes.object),
-    //   PropTypes.instanceOf(Map),
-    // ]).isRequired,
-    place: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    character: PropTypes.string,
+    coins: PropTypes.string,
+    imageURI: PropTypes.string,
+    isCPU: PropTypes.bool,
+    minigameCoins: PropTypes.string,
+    place: PropTypes.string.isRequired,
+    player: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      avatarURL: PropTypes.string.isRequired,
+      tag: PropTypes.string.isRequired,
+    }).isRequired,
     players: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -56,6 +66,11 @@ class EntryCard extends Component {
       }),
     ).isRequired,
     selectCharacter: PropTypes.func.isRequired,
+    selectPlayer: PropTypes.func.isRequired,
+    setCoins: PropTypes.func.isRequired,
+    setMGCoins: PropTypes.func.isRequired,
+    setStars: PropTypes.func.isRequired,
+    stars: PropTypes.string,
     toggleCPU: PropTypes.func.isRequired,
   };
 
@@ -63,32 +78,63 @@ class EntryCard extends Component {
     this.props.toggleCPU(this.props.place, false);
   }
 
+  findPlayer = tag => {
+    const { place, players } = this.props;
+    players.some(player => {
+      if (player.tag === tag) {
+        this.props.selectPlayer(place, player);
+        return true;
+      }
+      return false;
+    });
+  };
+
   generatePlayerList = (players = this.props.players) => {
     const list = players.map(player => ({
       leftAvatar: (
         <Avatar alt={`Avatar for ${player.tag}`} src={player.avatarURL} />
       ),
       name: player.tag,
-      // playerId: player.id, TODO link id to selected value
     }));
 
     return list;
   };
 
-  render() {
+  toggleCPU = value => {
     const { place } = this.props;
+    this.props.toggleCPU(place, value);
+    this.props.selectCharacter(place, '');
+  };
+
+  render() {
+    const {
+      character,
+      coins,
+      imageURI,
+      isCPU,
+      minigameCoins,
+      place,
+      player,
+      stars,
+    } = this.props;
     const playerList = this.generatePlayerList();
+    let playerAvatar;
+    if (player && player.avatarURL) {
+      playerAvatar = player.avatarURL;
+    } else {
+      playerAvatar = require('../BoardRow/discord-avatar-default.png');
+    }
     return (
       <div className={s.container}>
         <div className={s.playerAvatar}>
-          <Avatar src={require('../BoardRow/discord-avatar-default.png')} />
+          <Avatar alt="Player avatar" src={playerAvatar} />
         </div>
         <div className={s.cpuToggle}>
           <Switch
             id={`cpuToggle-${place}`}
             name={`cpuToggle-${place}`}
             label="CPU"
-            onChange={isCPU => this.props.toggleCPU(this.props.place, isCPU)}
+            onChange={value => this.toggleCPU(value)}
           />
         </div>
         <div className={s.placeIndex}>
@@ -98,155 +144,68 @@ class EntryCard extends Component {
         </div>
         <div className={s.playerSearch}>
           <Autocomplete
-            className={cn(s.autocomplete)}
-            id={`searchPeople-${place}`}
-            placeholder="Search"
+            className={cn(s.autocomplete) /* TODO remove */}
             data={playerList}
             dataLabel="name"
+            disabled={isCPU}
+            focusInputOnAutocomplete={false}
             fullWidth
+            id={`searchPeople-${place}`}
+            onAutocomplete={tag => this.findPlayer(tag)}
+            placeholder="Search"
           />
         </div>
         <div className={s.charAvatar}>
-          <img alt="" src={require('../_SharedAssets/p_toad.png')} />
+          <img
+            alt=""
+            src={imageURI || require('../_SharedAssets/mushroom.svg')}
+          />
         </div>
         <div className={s.charSelect}>
           <SelectField
+            disabled={isCPU}
             id={`characters-${place}`}
-            label="Character"
-            placeholder="Select a character"
-            menuItems={[
-              {
-                name: 'Birdo',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_birdo.png')} />
-                ),
-              },
-              {
-                name: 'Blooper',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_blooper.png')} />
-                ),
-              },
-              {
-                name: 'Boo',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_boo.png')} />
-                ),
-              },
-              {
-                name: 'Daisy',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_daisy.png')} />
-                ),
-              },
-              {
-                name: 'Donkey Kong',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_donkeykong.png')} />
-                ),
-              },
-              {
-                name: 'Dry Bones',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_drybones.png')} />
-                ),
-              },
-              {
-                name: 'Hammer Bro',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_hammerbro.png')} />
-                ),
-              },
-              {
-                name: 'Kamek',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_kamek.png')} />
-                ),
-              },
-              {
-                name: 'Koopa Kid',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_koopakid.png')} />
-                ),
-              },
-              {
-                name: 'Koopa Troopa',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_koopatroopa.png')} />
-                ),
-              },
-              {
-                name: 'Luigi',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_luigi.png')} />
-                ),
-              },
-              {
-                name: 'Mario',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_mario.png')} />
-                ),
-              },
-              {
-                name: 'Peach',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_peach.png')} />
-                ),
-              },
-              {
-                name: 'Shy Guy',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_shyguy.png')} />
-                ),
-              },
-              {
-                name: 'Toad',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_toad.png')} />
-                ),
-              },
-              {
-                name: 'Toadette',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_toadette.png')} />
-                ),
-              },
-              {
-                name: 'Waluigi',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_waluigi.png')} />
-                ),
-              },
-              {
-                name: 'Wario',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_wario.png')} />
-                ),
-              },
-              {
-                name: 'Yoshi',
-                leftAvatar: (
-                  <Avatar src={require('../_SharedAssets/p_yoshi.png')} />
-                ),
-              },
-            ]}
             itemLabel="name"
             itemValue="name"
-            onChange={value =>
-              this.props.selectCharacter(this.props.place, value)}
+            label="Character"
+            menuItems={characterList}
+            onChange={value => this.props.selectCharacter(place, value)}
+            placeholder="Select a character"
+            value={character}
+          />
+        </div>
+        <div className={s.coinIcon}>
+          <img alt="" src={require('../_SharedAssets/coin.png')} />
+        </div>
+        <div className={s.coinInput}>
+          <NumberInput
+            label="Coins"
+            onChange={value => this.props.setCoins(place, value)}
+            value={coins}
+          />
+        </div>
+        <div className={s.mgCoinIcon}>
+          <img
+            alt="Minigame Coin Icon"
+            src={require('../_SharedAssets/coin.png')}
+          />
+        </div>
+        <div className={s.mgCoinInput}>
+          <NumberInput
+            label="MG Coins"
+            onChange={value => this.props.setMGCoins(place, value)}
+            value={minigameCoins}
           />
         </div>
         <div className={s.starIcon}>
           <img alt="" src={require('../_SharedAssets/star.png')} />
         </div>
         <div className={s.starInput}>
-          <NumberInput />
-        </div>
-        <div className={s.coinIcon}>
-          <img alt="" src={require('../_SharedAssets/coin.png')} />
-        </div>
-        <div className={s.coinInput}>
-          <NumberInput />
+          <NumberInput
+            label="Stars"
+            onChange={value => this.props.setStars(place, value)}
+            value={stars}
+          />
         </div>
       </div>
     );

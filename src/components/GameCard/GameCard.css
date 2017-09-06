@@ -1,3 +1,27 @@
 .asdf {
   /* placeholder to pass husky */
 }
+
+.container {
+  align-content: center;
+  border-radius: 2px;
+  display: grid;
+  grid-template-areas:
+    'game characters characters characters characters' 60px
+    'stars s1 s2 s3 s4' 32px
+    'coins c1 c2 c3 c4' 32px
+    'p1 p1 player1 player1 player1' 24px
+    'p2 p2 player2 player2 player2' 24px
+    'p3 p3 player3 player3 player3' 24px
+    'p4 p4 player4 player4 player4' 24px
+    'boardTitle boardTitle board board board' 24px
+    'gamemode gamemode gamemode gamemode gamemode' 24px
+    / 1fr 1fr 1fr 1fr 1fr;
+  filter:
+    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.14))
+    drop-shadow(0 1px 5px rgba(0, 0, 0, 0.12))
+    drop-shadow(0 3px 1px rgba(0, 0, 0, 0.2));
+  margin: 1.44rem 0.8rem;
+  position: relative;
+  text-align: center;
+}

@@ -1,5 +1,8 @@
 /* eslint-disable import/prefer-default-export, global-require */
 
+import React from 'react';
+import Avatar from 'react-md/lib/Avatars';
+
 export const getBoards = game => {
   switch (game) {
     case 'Mario Party 1':
@@ -94,7 +97,162 @@ export const getBoards = game => {
 
 export const getCharacterImage = character => {
   switch (character) {
+    case 'Birdo':
+      return require('../components/_SharedAssets/p_birdo.png');
+    case 'Blooper':
+      return require('../components/_SharedAssets/p_blooper.png');
+    case 'Boo':
+      return require('../components/_SharedAssets/p_boo.png');
+    case 'Daisy':
+      return require('../components/_SharedAssets/p_daisy.png');
+    case 'Donkey Kong':
+      return require('../components/_SharedAssets/p_donkeykong.png');
+    case 'Dry Bones':
+      return require('../components/_SharedAssets/p_drybones.png');
+    case 'Hammer Bro':
+      return require('../components/_SharedAssets/p_hammerbro.png');
+    case 'Kamek':
+      return require('../components/_SharedAssets/p_kamek.png');
+    case 'Koopa Kid':
+      return require('../components/_SharedAssets/p_koopakid.png');
+    case 'Koopa Troopa':
+      return require('../components/_SharedAssets/p_koopatroopa.png');
+    case 'Luigi':
+      return require('../components/_SharedAssets/p_luigi.png');
+    case 'Mario':
+      return require('../components/_SharedAssets/p_mario.png');
+    case 'Peach':
+      return require('../components/_SharedAssets/p_peach.png');
+    case 'Shy Guy':
+      return require('../components/_SharedAssets/p_shyguy.png');
+    case 'Toad':
+      return require('../components/_SharedAssets/p_toad.png');
+    case 'Toadette':
+      return require('../components/_SharedAssets/p_toadette.png');
+    case 'Waluigi':
+      return require('../components/_SharedAssets/p_waluigi.png');
+    case 'Wario':
+      return require('../components/_SharedAssets/p_wario.png');
+    case 'Yoshi':
+      return require('../components/_SharedAssets/p_yoshi.png');
     default:
       return require('../components/_SharedAssets/mushroom.svg'); // TODO possibly path.resolve()-based logic
   }
 };
+
+export const characterList = [
+  {
+    name: 'Birdo',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_birdo.png')} />
+    ),
+  },
+  {
+    name: 'Blooper',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_blooper.png')} />
+    ),
+  },
+  {
+    name: 'Boo',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_boo.png')} />
+    ),
+  },
+  {
+    name: 'Daisy',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_daisy.png')} />
+    ),
+  },
+  {
+    name: 'Donkey Kong',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_donkeykong.png')} />
+    ),
+  },
+  {
+    name: 'Dry Bones',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_drybones.png')} />
+    ),
+  },
+  {
+    name: 'Hammer Bro',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_hammerbro.png')} />
+    ),
+  },
+  {
+    name: 'Kamek',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_kamek.png')} />
+    ),
+  },
+  {
+    name: 'Koopa Kid',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_koopakid.png')} />
+    ),
+  },
+  {
+    name: 'Koopa Troopa',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_koopatroopa.png')} />
+    ),
+  },
+  {
+    name: 'Luigi',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_luigi.png')} />
+    ),
+  },
+  {
+    name: 'Mario',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_mario.png')} />
+    ),
+  },
+  {
+    name: 'Peach',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_peach.png')} />
+    ),
+  },
+  {
+    name: 'Shy Guy',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_shyguy.png')} />
+    ),
+  },
+  {
+    name: 'Toad',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_toad.png')} />
+    ),
+  },
+  {
+    name: 'Toadette',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_toadette.png')} />
+    ),
+  },
+  {
+    name: 'Waluigi',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_waluigi.png')} />
+    ),
+  },
+  {
+    name: 'Wario',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_wario.png')} />
+    ),
+  },
+  {
+    name: 'Yoshi',
+    leftAvatar: (
+      <Avatar src={require('../components/_SharedAssets/p_yoshi.png')} />
+    ),
+  },
+];

@@ -3,6 +3,7 @@ import {
   GET_BOARDS_FOR_SELECTED_GAME,
   SELECT_BOARD,
   SELECT_DATE,
+  ENTRY_SELECT_PLAYER,
   ENTRY_TOGGLE_CPU_PLAYER,
   ENTRY_SELECT_CHARACTER,
   GET_IMAGE_URI_FOR_SELECTED_CHARACTER,
@@ -21,9 +22,14 @@ const initialState = {
 };
 
 const mergeMaps = (oldMap, payload) => {
+  const { entryId, ...payloadData } = payload;
+  let oldData = {};
+  // Preserve the deeper values of the old Map
+  if (oldMap instanceof Map && oldMap.has(entryId)) {
+    oldData = oldMap.get(entryId);
+  }
   const newMap = new Map();
-  const { entryId, ...data } = payload;
-  newMap.set(entryId, data);
+  newMap.set(entryId, { ...oldData, ...payloadData });
   return new Map([...oldMap, ...newMap]);
 };
 
@@ -48,6 +54,14 @@ export default function gameInputForm(state = initialState, action) {
       return {
         ...state,
         date: action.payload.date,
+      };
+    case ENTRY_SELECT_PLAYER:
+      return {
+        ...state,
+        entries: mergeMaps(state.entries, {
+          entryId: action.payload.entryId,
+          player: action.payload.player,
+        }),
       };
     case ENTRY_TOGGLE_CPU_PLAYER:
       return {
