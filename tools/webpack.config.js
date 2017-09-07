@@ -103,7 +103,8 @@ const config = {
             // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-self
             ...(isDebug ? ['transform-react-jsx-self'] : []),
             // Adds support for ES7 decorators
-            ...(isDebug ? ['transform-decorators-legacy'] : []),
+            // https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy
+            'transform-decorators-legacy',
           ],
         },
       },
