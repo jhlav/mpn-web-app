@@ -111,6 +111,8 @@
 }
 
 @media screen and (max-width: 360px) {
-  font-size: 15px;
-  font-weight: 600;
+  .tag {
+    font-size: 15px;
+    font-weight: 600;
+  }
 }
