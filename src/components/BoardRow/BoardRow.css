@@ -65,7 +65,8 @@
   background-color: white;
   display: grid;
   grid-template: 64px 64px / 1fr 1fr;
-  overflow-wrap: word-break;
+  overflow-wrap: break-word;
+  word-break: break-all;
   word-wrap: break-word;
 }
 
