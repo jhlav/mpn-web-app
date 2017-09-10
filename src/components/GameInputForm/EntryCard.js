@@ -1,4 +1,4 @@
-/* eslint-disable global-require, import/no-dynamic-require, no-console */
+/* eslint-disable global-require, import/no-dynamic-require */
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -78,7 +78,6 @@ class EntryCard extends Component {
   }
 
   findPlayer = tag => {
-    console.log('onAutocomplete fired');
     const { place, players } = this.props;
     players.some(player => {
       if (player.tag === tag) {
@@ -100,13 +99,7 @@ class EntryCard extends Component {
     return list;
   };
 
-  preventMenuOpen = event => {
-    console.log('onMenuOpen fired');
-    console.log(event);
-  };
-
-  toggleCPU = (value, event) => {
-    console.log(event.bubbles);
+  toggleCPU = value => {
     const { place } = this.props;
     this.props.toggleCPU(place, value);
     this.props.selectCharacter(place, '');
@@ -157,13 +150,6 @@ class EntryCard extends Component {
             fullWidth
             id={`searchPeople-${place}`}
             onAutocomplete={tag => this.findPlayer(tag)}
-            onBlur={() => console.log('onBlur fired')}
-            onChange={() => console.log('onChange fired')}
-            onFocus={() => console.log('onFocus fired')}
-            onKeyDown={() => console.log('onKeyDown fired')}
-            onMenuClose={() => console.log('onMenuClose fired')}
-            onMenuOpen={this.preventMenuOpen}
-            onMouseDown={() => console.log('onMouseDown fired')}
             placeholder="Search by Discord tag"
           />
         </div>
