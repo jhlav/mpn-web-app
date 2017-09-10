@@ -1,10 +1,9 @@
-/* eslint-disable global-require, import/no-dynamic-require */
+/* eslint-disable global-require, import/no-dynamic-require, no-console */
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import cn from 'classnames';
 import { connect } from 'react-redux';
 
 import Avatar from 'react-md/lib/Avatars';
@@ -79,6 +78,7 @@ class EntryCard extends Component {
   }
 
   findPlayer = tag => {
+    console.log('onAutocomplete fired');
     const { place, players } = this.props;
     players.some(player => {
       if (player.tag === tag) {
@@ -100,7 +100,13 @@ class EntryCard extends Component {
     return list;
   };
 
-  toggleCPU = value => {
+  preventMenuOpen = event => {
+    console.log('onMenuOpen fired');
+    console.log(event);
+  };
+
+  toggleCPU = (value, event) => {
+    console.log(event.bubbles);
     const { place } = this.props;
     this.props.toggleCPU(place, value);
     this.props.selectCharacter(place, '');
@@ -134,7 +140,7 @@ class EntryCard extends Component {
             id={`cpuToggle-${place}`}
             name={`cpuToggle-${place}`}
             label="CPU"
-            onChange={value => this.toggleCPU(value)}
+            onChange={this.toggleCPU}
           />
         </div>
         <div className={s.placeIndex}>
@@ -144,7 +150,6 @@ class EntryCard extends Component {
         </div>
         <div className={s.playerSearch}>
           <Autocomplete
-            className={cn(s.autocomplete) /* TODO remove */}
             data={playerList}
             dataLabel="name"
             disabled={isCPU}
@@ -152,7 +157,14 @@ class EntryCard extends Component {
             fullWidth
             id={`searchPeople-${place}`}
             onAutocomplete={tag => this.findPlayer(tag)}
-            placeholder="Search"
+            onBlur={() => console.log('onBlur fired')}
+            onChange={() => console.log('onChange fired')}
+            onFocus={() => console.log('onFocus fired')}
+            onKeyDown={() => console.log('onKeyDown fired')}
+            onMenuClose={() => console.log('onMenuClose fired')}
+            onMenuOpen={this.preventMenuOpen}
+            onMouseDown={() => console.log('onMouseDown fired')}
+            placeholder="Search by Discord tag"
           />
         </div>
         <div className={s.charAvatar}>

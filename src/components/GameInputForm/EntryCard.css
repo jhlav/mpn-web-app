@@ -51,12 +51,6 @@
   justify-content: stretch;
 }
 
-.autocomplete {
-  & > div {
-    padding: 0;
-  }
-}
-
 .charAvatar {
   grid-area: charAvatar;
 

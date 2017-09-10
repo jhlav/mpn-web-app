@@ -41,7 +41,7 @@ import {
 @withStyles(s)
 class GameInputForm extends React.Component {
   static propTypes = {
-    // board: PropTypes.string.isRequired,
+    board: PropTypes.string.isRequired,
     boardsAvailable: PropTypes.arrayOf(PropTypes.String).isRequired,
     date: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string])
       .isRequired,
