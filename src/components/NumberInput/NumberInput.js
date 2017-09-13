@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import Button from 'react-md/lib/Buttons/Button';
+import FontIcon from 'react-md/lib/FontIcons';
 import TextField from 'react-md/lib/TextFields';
 
 import s from './NumberInput.css';
@@ -52,9 +53,11 @@ class NumberInput extends React.Component {
     // TODO Make long presses possible with oTS / oTE and onMouseDown / onMouseUp
     return (
       <div className={s.root}>
-        <Button flat onClick={this.onIncrement}>
-          add
-        </Button>
+        <Button
+          flat
+          iconEl={<FontIcon>add</FontIcon>}
+          onClick={this.onIncrement}
+        />
         <TextField
           label={label}
           lineDirection="center"
@@ -63,9 +66,11 @@ class NumberInput extends React.Component {
           type="number"
           value={value}
         />
-        <Button flat onClick={this.onDecrement}>
-          remove
-        </Button>
+        <Button
+          flat
+          iconEl={<FontIcon>remove</FontIcon>}
+          onClick={this.onDecrement}
+        />
       </div>
     );
   }

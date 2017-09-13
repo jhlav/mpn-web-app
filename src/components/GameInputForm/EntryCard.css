@@ -67,6 +67,10 @@
 
   & > div {
     display: inline-grid;
+
+    & > div {
+      text-align: left;
+    }
   }
 
   & :global(.md-avatar) {

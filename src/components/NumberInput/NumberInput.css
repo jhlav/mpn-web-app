@@ -24,4 +24,12 @@
   & > div:only-of-type {
     grid-area: numInput;
   }
+
+  & :global(.md-icon-separator) {
+    justify-content: center;
+
+    & :global(.md-icon-text) {
+      display: none;
+    }
+  }
 }
