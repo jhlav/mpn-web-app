@@ -6,7 +6,7 @@ import emoji from 'react-easy-emoji';
 // import twEmoji from 'twemoji';
 // import { Card, Col, Row } from 'react-materialize';
 import s from './BoardRow.css';
-import avatar from './discord-avatar-default.png';
+import avatar from '../_SharedAssets/discord-avatar-default.png';
 
 @withStyles(s)
 class BoardRow extends React.Component {

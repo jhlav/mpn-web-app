@@ -1,0 +1,15 @@
+mutation {
+  createGame(input: $input) {
+    game
+    board
+    date
+    entries {
+      place
+      character
+      coins
+      minigameCoins
+      stars
+      player
+    }
+  }
+}

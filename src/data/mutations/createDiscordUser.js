@@ -60,7 +60,20 @@ const createDiscordUser = {
     //
     // if (errors.length) throw new ValidationError(errors);
 
-    const data = await DiscordUser.create({
+    const findUser = await DiscordUser.findById(input.id);
+
+    if (findUser) {
+      const { id, ...data } = input;
+      const updateUser = await DiscordUser.update(
+        { ...data },
+        { where: { id } },
+      )
+        .then(res => ({ ...res.dataValues }))
+        .catch(error => console.warn(error));
+
+      return updateUser;
+    }
+    const createUser = await DiscordUser.create({
       id: input.id,
       avatarURL: input.avatarURL,
       nickname: input.nickname,
@@ -69,7 +82,7 @@ const createDiscordUser = {
       .then(res => ({ ...res.dataValues }))
       .catch(error => console.warn(error));
 
-    return data;
+    return createUser;
   },
 };
 

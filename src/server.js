@@ -31,6 +31,7 @@ import passport from './passport';
 import router from './router';
 import models from './data/models';
 import schema from './data/schema';
+import DiscordUser from './data/models/DiscordUser';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
@@ -250,6 +251,19 @@ if (!module.hot) {
     });
   });
 }
+
+//
+// Find or create a DiscordUser for CPU
+// -----------------------------------------------------------------------------
+DiscordUser.findOrCreate({
+  defaults: {
+    id: '1',
+    avatarURL:
+      'https://discordapp.com/assets/dd4dbc0016779df1378e7812eabaa04d.png',
+    tag: 'CPU',
+  },
+  where: { id: '1' },
+});
 
 //
 // Hot Module Replacement

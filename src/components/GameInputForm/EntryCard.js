@@ -42,6 +42,11 @@ class EntryCard extends Component {
     imageURI: require('../_SharedAssets/mushroom.svg'),
     isCPU: false,
     minigameCoins: '0',
+    player: {
+      id: '',
+      avatarURL: require('../_SharedAssets/discord-avatar-default.png'),
+      tag: '',
+    },
     stars: '0',
   };
 
@@ -56,7 +61,7 @@ class EntryCard extends Component {
       id: PropTypes.string.isRequired,
       avatarURL: PropTypes.string.isRequired,
       tag: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
     players: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -74,7 +79,9 @@ class EntryCard extends Component {
   };
 
   componentWillMount() {
-    this.props.toggleCPU(this.props.place, false);
+    if (this.props.isCPU !== false) {
+      this.props.toggleCPU(this.props.place, false);
+    }
   }
 
   findPlayer = tag => {
@@ -88,8 +95,9 @@ class EntryCard extends Component {
     });
   };
 
-  generatePlayerList = (players = this.props.players) => {
-    const list = players.map(player => ({
+  generatePlayerList = () => {
+    // const playersNoCPU = this.props.players.filter(player => player.id !== '1');
+    const list = this.props.players.map(player => ({
       leftAvatar: (
         <Avatar alt={`Avatar for ${player.tag}`} src={player.avatarURL} />
       ),
@@ -100,9 +108,18 @@ class EntryCard extends Component {
   };
 
   toggleCPU = value => {
-    const { place } = this.props;
+    const { place, players } = this.props;
     this.props.toggleCPU(place, value);
     this.props.selectCharacter(place, '');
+    // Until we find the CPU player, iterate
+    // When we do, provide that DiscordUser data and end looping
+    players.some(player => {
+      if (player.tag === 'CPU') {
+        this.props.selectPlayer(place, player);
+        return true;
+      }
+      return false;
+    });
   };
 
   render() {
@@ -121,7 +138,7 @@ class EntryCard extends Component {
     if (player && player.avatarURL) {
       playerAvatar = player.avatarURL;
     } else {
-      playerAvatar = require('../BoardRow/discord-avatar-default.png');
+      playerAvatar = require('../_SharedAssets/discord-avatar-default.png');
     }
     return (
       <div className={s.container}>
@@ -145,6 +162,7 @@ class EntryCard extends Component {
           <Autocomplete
             data={playerList}
             dataLabel="name"
+            dataValue="name"
             disabled={isCPU}
             focusInputOnAutocomplete={false}
             fullWidth
@@ -177,6 +195,7 @@ class EntryCard extends Component {
         </div>
         <div className={s.coinInput}>
           <NumberInput
+            id={`coinInput-${place}`}
             label="Coins"
             onChange={value => this.props.setCoins(place, value)}
             value={coins}
@@ -190,6 +209,7 @@ class EntryCard extends Component {
         </div>
         <div className={s.mgCoinInput}>
           <NumberInput
+            id={`mgCoinInput-${place}`}
             label="MG Coins"
             onChange={value => this.props.setMGCoins(place, value)}
             value={minigameCoins}
@@ -200,6 +220,7 @@ class EntryCard extends Component {
         </div>
         <div className={s.starInput}>
           <NumberInput
+            id={`starInput-${place}`}
             label="Stars"
             onChange={value => this.props.setStars(place, value)}
             value={stars}

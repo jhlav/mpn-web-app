@@ -11,6 +11,7 @@ import s from './NumberInput.css';
 @withStyles(s)
 class NumberInput extends React.Component {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
@@ -48,7 +49,7 @@ class NumberInput extends React.Component {
   };
 
   render() {
-    const { label, value } = this.props;
+    const { id, label, value } = this.props;
     // TODO Add onTouchStart and onTouchEnd props for better mobile experience
     // TODO Make long presses possible with oTS / oTE and onMouseDown / onMouseUp
     return (
@@ -59,6 +60,7 @@ class NumberInput extends React.Component {
           onClick={this.onIncrement}
         />
         <TextField
+          id={id}
           label={label}
           lineDirection="center"
           onChange={this.onChange}

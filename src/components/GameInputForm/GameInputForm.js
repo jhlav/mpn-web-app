@@ -4,14 +4,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
+import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+
 import Button from 'react-md/lib/Buttons';
 import Card from 'react-md/lib/Cards/Card';
+import CardActions from 'react-md/lib/Cards/CardActions';
 import CardTitle from 'react-md/lib/Cards/CardTitle';
 import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import Divider from 'react-md/lib/Dividers';
+import FontIcon from 'react-md/lib/FontIcons';
 import SelectField from 'react-md/lib/SelectFields/SelectField';
 
-import { connect } from 'react-redux';
+import createGame from './createGame.graphql';
 import EntryCard from './EntryCard';
 import s from './GameInputForm.css';
 
@@ -20,6 +25,16 @@ import {
   selectBoard,
   selectDate,
 } from '../../actions/gameInputForm';
+
+const intMP1 = require('../_SharedAssets/integerMP1.png');
+const intMP2 = require('../_SharedAssets/integerMP2.png');
+const intMP3 = require('../_SharedAssets/integerMP3.png');
+const intMP4 = require('../_SharedAssets/integerMP4.png');
+const intMP5 = require('../_SharedAssets/integerMP5.png');
+const intMP6 = require('../_SharedAssets/integerMP6.png');
+const intMP7 = require('../_SharedAssets/integerMP7.png');
+const intMP8 = require('../_SharedAssets/integerMP8.png');
+const intMP9 = require('../_SharedAssets/integerMP9.png');
 
 @connect(
   // map state to props
@@ -38,6 +53,7 @@ import {
     selectDate: date => dispatch(selectDate(date)),
   }),
 )
+@graphql(createGame)
 @withStyles(s)
 class GameInputForm extends React.Component {
   static propTypes = {
@@ -46,7 +62,8 @@ class GameInputForm extends React.Component {
     date: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string])
       .isRequired,
     entries: PropTypes.instanceOf(Map).isRequired,
-    // game: PropTypes.string.isRequired,
+    game: PropTypes.string.isRequired,
+    mutate: PropTypes.func.isRequired,
     players: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -57,6 +74,69 @@ class GameInputForm extends React.Component {
     selectBoard: PropTypes.func.isRequired,
     selectDate: PropTypes.func.isRequired,
     selectGame: PropTypes.func.isRequired,
+  };
+
+  submitForm = () => {
+    const { board, date, game, entries } = this.props;
+    let platform;
+    if (/[1-3]$/.test(game)) {
+      platform = 'N64';
+    } else if (/[4-7]/.test(game)) {
+      platform = 'Gamecube';
+    } else if (/[8-9]/.test(game)) {
+      platform = 'Wii';
+    }
+    if (
+      entries.has('1') &&
+      entries.has('2') &&
+      entries.has('3') &&
+      entries.has('4')
+    ) {
+      this.props.mutate({
+        variables: {
+          input: {
+            game,
+            platform,
+            board,
+            date,
+            entries: [
+              {
+                place: 1,
+                character: entries.get('1').character,
+                coins: parseInt(entries.get('1').coins, 10),
+                minigameCoins: parseInt(entries.get('1').minigameCoins, 10),
+                stars: parseInt(entries.get('1').stars, 10),
+                player: entries.get('1').player,
+              },
+              {
+                place: 2,
+                character: entries.get('2').character,
+                coins: parseInt(entries.get('2').coins, 10),
+                minigameCoins: parseInt(entries.get('2').minigameCoins, 10),
+                stars: parseInt(entries.get('2').stars, 10),
+                player: entries.get('2').player,
+              },
+              {
+                place: 3,
+                character: entries.get('3').character,
+                coins: parseInt(entries.get('3').coins, 10),
+                minigameCoins: parseInt(entries.get('3').minigameCoins, 10),
+                stars: parseInt(entries.get('3').stars, 10),
+                player: entries.get('3').player,
+              },
+              {
+                place: 4,
+                character: entries.get('4').character,
+                coins: parseInt(entries.get('4').coins, 10),
+                minigameCoins: parseInt(entries.get('4').minigameCoins, 10),
+                stars: parseInt(entries.get('4').stars, 10),
+                player: entries.get('4').player,
+              },
+            ],
+          },
+        },
+      });
+    }
   };
 
   render() {
@@ -86,33 +166,51 @@ class GameInputForm extends React.Component {
         <CardTitle title="Record a Game" />
         <div className={s.upperPortion}>
           <div className={s.gameButtons}>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 1')}>
-              <img alt="" src={require('../_SharedAssets/integerMP1.png')} />
-            </Button>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 2')}>
-              <img alt="" src={require('../_SharedAssets/integerMP2.png')} />
-            </Button>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 3')}>
-              <img alt="" src={require('../_SharedAssets/integerMP3.png')} />
-            </Button>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 4')}>
-              <img alt="" src={require('../_SharedAssets/integerMP4.png')} />
-            </Button>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 5')}>
-              <img alt="" src={require('../_SharedAssets/integerMP5.png')} />
-            </Button>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 6')}>
-              <img alt="" src={require('../_SharedAssets/integerMP6.png')} />
-            </Button>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 7')}>
-              <img alt="" src={require('../_SharedAssets/integerMP7.png')} />
-            </Button>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 8')}>
-              <img alt="" src={require('../_SharedAssets/integerMP8.png')} />
-            </Button>
-            <Button icon onClick={() => this.props.selectGame('Mario Party 9')}>
-              <img alt="" src={require('../_SharedAssets/integerMP9.png')} />
-            </Button>
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP1} />}
+              onClick={() => this.props.selectGame('Mario Party 1')}
+            />
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP2} />}
+              onClick={() => this.props.selectGame('Mario Party 2')}
+            />
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP3} />}
+              onClick={() => this.props.selectGame('Mario Party 3')}
+            />
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP4} />}
+              onClick={() => this.props.selectGame('Mario Party 4')}
+            />
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP5} />}
+              onClick={() => this.props.selectGame('Mario Party 5')}
+            />
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP6} />}
+              onClick={() => this.props.selectGame('Mario Party 6')}
+            />
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP7} />}
+              onClick={() => this.props.selectGame('Mario Party 7')}
+            />
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP8} />}
+              onClick={() => this.props.selectGame('Mario Party 8')}
+            />
+            <Button
+              icon
+              iconEl={<img alt="" src={intMP9} />}
+              onClick={() => this.props.selectGame('Mario Party 9')}
+            />
           </div>
           <div className={s.gameInputs}>
             <SelectField
@@ -153,6 +251,19 @@ class GameInputForm extends React.Component {
           <EntryCard place="3" players={players} {...data[2]} />
           <EntryCard place="4" players={players} {...data[3]} />
         </div>
+        <CardActions centered className={s.cardActions}>
+          <Button
+            flat
+            iconEl={<FontIcon>send</FontIcon>}
+            onClick={this.submitForm}
+            secondary
+          >
+            Submit
+          </Button>
+          <Button flat iconEl={<FontIcon>restore</FontIcon>} primary>
+            Reset
+          </Button>
+        </CardActions>
       </Card>
     );
   }

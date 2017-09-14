@@ -6,7 +6,7 @@ import {
 } from 'graphql';
 import uuid from 'uuid/v1';
 
-import { Game, GameEntry } from '../models';
+import { DiscordUser, Game, GameEntry } from '../models';
 import GameType from '../types/GameType';
 import GameEntryInputType from '../types/GameEntryInputType';
 
@@ -64,10 +64,19 @@ const createGame = {
         platform: input.platform,
         board: input.board,
         date: input.date,
-        entries: input.entries.map(entry => ({ gameId: id, ...entry })),
+        entries: input.entries.map(entry => ({
+          gameId: id,
+          ...entry,
+        })),
       },
       {
-        include: [{ model: GameEntry, as: 'entries' }],
+        include: [
+          {
+            model: GameEntry,
+            as: 'entries',
+            include: [{ model: DiscordUser, as: 'player' }],
+          },
+        ],
       },
     )
       .then(res => ({ ...res.dataValues }))
