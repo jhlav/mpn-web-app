@@ -15,13 +15,22 @@ const player = {
   },
   async resolve(_, args) {
     // TODO validate args
-    const data = await DiscordUser.findOne({
-      where: {
-        id: args.id,
-        tag: args.tag,
-      },
-    }).then(result => ({ ...result.dataValues }));
-    return data;
+    // id.length must be 1 or 18
+    // tag must start with any type & quantity of characters then end with # and 4 digits
+
+    const { id, tag } = args;
+    // If we have both id and tag, or only ID
+    if ((id && tag) || (id && !tag)) {
+      const findUserById = await DiscordUser.findById(id);
+
+      return findUserById;
+    }
+    // Or we have no ID, but have tag
+    const findUserByTag = await DiscordUser.findOne({
+      where: { tag },
+    });
+
+    return findUserByTag;
   },
 };
 

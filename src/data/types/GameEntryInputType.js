@@ -16,7 +16,7 @@ const GameEntryInputType = new NonNull(
       },
       character: {
         type: new NonNull(StringType),
-        description: `Which character was played, i.e 'Toad'`,
+        description: "Which character was played, i.e 'Toad'",
       },
       coins: {
         type: new NonNull(Integer),
@@ -28,11 +28,11 @@ const GameEntryInputType = new NonNull(
       },
       stars: {
         type: new NonNull(Integer),
-        description: `How many stars the player earned, usually less than 10.`,
+        description: 'How many stars the player earned, usually less than 10.',
       },
-      player: {
+      playerId: {
         type: new NonNull(StringType),
-        description: 'The player - referenced by unique Discord ID.',
+        description: "The player's unique Discord ID.",
       },
     },
   }),

@@ -16,19 +16,11 @@ import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
 
-Game.hasMany(GameEntry, {
-  foreignKey: 'gameId',
-  as: 'entries',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
-});
+Game.hasMany(GameEntry);
+GameEntry.belongsTo(Game);
 
-GameEntry.belongsTo(DiscordUser, {
-  foreignKey: 'discordUserId',
-  as: 'player',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
-});
+DiscordUser.hasMany(GameEntry);
+GameEntry.belongsTo(DiscordUser);
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',

@@ -56,31 +56,27 @@ const createGame = {
   async resolve(_, args) {
     const { input } = args;
     const id = await uuid();
-    const data = await Game.create(
-      {
-        id,
-        game: input.game,
-        gamemode: input.gamemode,
-        platform: input.platform,
-        board: input.board,
-        date: input.date,
-        entries: input.entries.map(entry => ({
-          gameId: id,
-          ...entry,
-        })),
-      },
-      {
-        include: [
-          {
-            model: GameEntry,
-            as: 'entries',
-            include: [{ model: DiscordUser, as: 'player' }],
-          },
-        ],
-      },
-    )
-      .then(res => ({ ...res.dataValues }))
-      .catch(error => ({ error }));
+    const data = await Game.create({
+      id,
+      game: input.game,
+      gamemode: input.gamemode,
+      platform: input.platform,
+      board: input.board,
+      date: input.date,
+    }).then(game => {
+      input.entries.map(entry => {
+        const { playerId, ...entryData } = entry;
+        const findPlayer = DiscordUser.findById(playerId);
+        return GameEntry.create(entryData).then(gameEntry => {
+          game.addGameEntry(gameEntry);
+          findPlayer.then(player => player.addGameEntry(gameEntry));
+        });
+      });
+      return Game.findOne({
+        where: { id: game.id },
+        include: [{ model: GameEntry }],
+      });
+    });
 
     return data;
   },
