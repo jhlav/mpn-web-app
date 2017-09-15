@@ -16,11 +16,11 @@ import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
 
-Game.hasMany(GameEntry);
-GameEntry.belongsTo(Game);
+Game.GameEntries = Game.hasMany(GameEntry);
+GameEntry.Game = GameEntry.belongsTo(Game);
 
-DiscordUser.hasMany(GameEntry);
-GameEntry.belongsTo(DiscordUser);
+DiscordUser.GameEntries = DiscordUser.hasMany(GameEntry);
+GameEntry.DiscordUser = GameEntry.belongsTo(DiscordUser);
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',

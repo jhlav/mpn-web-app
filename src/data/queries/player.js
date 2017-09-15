@@ -1,4 +1,4 @@
-import { GraphQLID as IDType, GraphQLString as StringType } from 'graphql';
+import { GraphQLString as StringType } from 'graphql';
 
 import { DiscordUser } from '../models';
 import DiscordUserType from '../types/DiscordUserType';
@@ -7,7 +7,7 @@ const player = {
   type: DiscordUserType,
   args: {
     id: {
-      type: IDType,
+      type: StringType,
     },
     tag: {
       type: StringType,

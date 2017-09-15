@@ -1,6 +1,9 @@
-mutation {
+mutation submitGame($input: CreateGameInput!) {
   createGame(input: $input) {
+    id
     game
+    gamemode
+    platform
     board
     date
     entries {
@@ -9,7 +12,10 @@ mutation {
       coins
       minigameCoins
       stars
-      player
+      player {
+        id
+        tag
+      }
     }
   }
 }

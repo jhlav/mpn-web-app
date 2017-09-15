@@ -66,16 +66,15 @@ const createGame = {
     }).then(game => {
       input.entries.map(entry => {
         const { playerId, ...entryData } = entry;
-        const findPlayer = DiscordUser.findById(playerId);
+        const findPlayer = DiscordUser.findById(playerId, {
+          attributes: ['id'],
+        });
         return GameEntry.create(entryData).then(gameEntry => {
           game.addGameEntry(gameEntry);
           findPlayer.then(player => player.addGameEntry(gameEntry));
         });
       });
-      return Game.findOne({
-        where: { id: game.id },
-        include: [{ model: GameEntry }],
-      });
+      return game;
     });
 
     return data;

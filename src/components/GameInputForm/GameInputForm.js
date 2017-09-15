@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 
 import Button from 'react-md/lib/Buttons';
 import Card from 'react-md/lib/Cards/Card';
@@ -16,7 +16,7 @@ import Divider from 'react-md/lib/Dividers';
 import FontIcon from 'react-md/lib/FontIcons';
 import SelectField from 'react-md/lib/SelectFields/SelectField';
 
-import createGame from './createGame.graphql';
+import submitGame from './submitGame.graphql';
 import EntryCard from './EntryCard';
 import s from './GameInputForm.css';
 
@@ -53,17 +53,19 @@ const intMP9 = require('../_SharedAssets/integerMP9.png');
     selectDate: date => dispatch(selectDate(date)),
   }),
 )
-@graphql(createGame)
+@withApollo
 @withStyles(s)
 class GameInputForm extends React.Component {
   static propTypes = {
     board: PropTypes.string.isRequired,
     boardsAvailable: PropTypes.arrayOf(PropTypes.String).isRequired,
+    client: PropTypes.shape({
+      mutate: PropTypes.func,
+    }).isRequired,
     date: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string])
       .isRequired,
     entries: PropTypes.instanceOf(Map).isRequired,
     game: PropTypes.string.isRequired,
-    mutate: PropTypes.func.isRequired,
     players: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -86,53 +88,29 @@ class GameInputForm extends React.Component {
     } else if (/[8-9]/.test(game)) {
       platform = 'Wii';
     }
-    if (
-      entries.has('1') &&
-      entries.has('2') &&
-      entries.has('3') &&
-      entries.has('4')
-    ) {
-      this.props.mutate({
+    const mappedEntries = [];
+    entries.forEach((valueObj, key) => {
+      mappedEntries[key - 1] = {
+        place: parseInt(key, 10),
+        character: valueObj.character,
+        coins: parseInt(valueObj.coins, 10) || 0,
+        minigameCoins: parseInt(valueObj.minigameCoins, 10) || 0,
+        stars: parseInt(valueObj.stars, 10) || 0,
+        playerId: valueObj.player.id,
+      };
+    });
+    // Do we have all four entries?
+    if (entries.size === 4) {
+      this.props.client.mutate({
+        mutation: submitGame,
         variables: {
           input: {
             game,
+            gamemode: 'Battle Royale',
             platform,
             board,
             date,
-            entries: [
-              {
-                place: 1,
-                character: entries.get('1').character,
-                coins: parseInt(entries.get('1').coins, 10),
-                minigameCoins: parseInt(entries.get('1').minigameCoins, 10),
-                stars: parseInt(entries.get('1').stars, 10),
-                player: entries.get('1').player,
-              },
-              {
-                place: 2,
-                character: entries.get('2').character,
-                coins: parseInt(entries.get('2').coins, 10),
-                minigameCoins: parseInt(entries.get('2').minigameCoins, 10),
-                stars: parseInt(entries.get('2').stars, 10),
-                player: entries.get('2').player,
-              },
-              {
-                place: 3,
-                character: entries.get('3').character,
-                coins: parseInt(entries.get('3').coins, 10),
-                minigameCoins: parseInt(entries.get('3').minigameCoins, 10),
-                stars: parseInt(entries.get('3').stars, 10),
-                player: entries.get('3').player,
-              },
-              {
-                place: 4,
-                character: entries.get('4').character,
-                coins: parseInt(entries.get('4').coins, 10),
-                minigameCoins: parseInt(entries.get('4').minigameCoins, 10),
-                stars: parseInt(entries.get('4').stars, 10),
-                player: entries.get('4').player,
-              },
-            ],
+            entries: mappedEntries,
           },
         },
       });

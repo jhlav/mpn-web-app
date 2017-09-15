@@ -15,7 +15,7 @@ const GameEntryInputType = new NonNull(
           'Which place on the scoreboard was achieved (1, 2, 3, or 4).',
       },
       character: {
-        type: new NonNull(StringType),
+        type: StringType,
         description: "Which character was played, i.e 'Toad'",
       },
       coins: {

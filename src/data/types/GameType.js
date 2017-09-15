@@ -5,7 +5,9 @@ import {
   GraphQLString as StringType,
   GraphQLNonNull as NonNull,
 } from 'graphql';
+import { resolver } from 'graphql-sequelize';
 
+import Game from '../models/Game';
 import GameEntryType from './GameEntryType';
 
 const GameType = new ObjectType({
@@ -17,7 +19,10 @@ const GameType = new ObjectType({
     platform: { type: new NonNull(StringType) },
     board: { type: new NonNull(StringType) },
     date: { type: new NonNull(StringType) },
-    GameEntries: { type: new List(GameEntryType) },
+    entries: {
+      type: new List(GameEntryType),
+      resolve: resolver(Game.GameEntries),
+    },
   },
 });
 
