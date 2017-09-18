@@ -54,11 +54,6 @@ class NumberInput extends React.Component {
     // TODO Make long presses possible with oTS / oTE and onMouseDown / onMouseUp
     return (
       <div className={s.root}>
-        <Button
-          flat
-          iconEl={<FontIcon>add</FontIcon>}
-          onClick={this.onIncrement}
-        />
         <TextField
           id={id}
           label={label}
@@ -67,6 +62,11 @@ class NumberInput extends React.Component {
           placeholder="#"
           type="number"
           value={value}
+        />
+        <Button
+          flat
+          iconEl={<FontIcon>add</FontIcon>}
+          onClick={this.onIncrement}
         />
         <Button
           flat

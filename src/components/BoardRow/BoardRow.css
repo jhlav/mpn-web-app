@@ -41,6 +41,7 @@
   background-color: white;
   border-top-left-radius: 50%;
   border-bottom-left-radius: 50%;
+  overflow: auto;
   position: relative;
 
   &::before {

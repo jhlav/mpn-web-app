@@ -18,6 +18,7 @@ import normalizeCss from 'normalize.css';
 import BoardHeader from '../BoardHeader';
 import Feedback from '../Feedback';
 import Footer from '../Footer';
+import GamesHeader from '../Header/GamesHeader';
 import Header from '../Header';
 import s from './Layout.css';
 
@@ -36,13 +37,20 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { navigate, schema } = this.props;
+    const { schema } = this.props;
 
     switch (schema) {
       case 'boards':
         return (
           <div>
-            <BoardHeader navigate={navigate} />
+            <BoardHeader navigate={this.props.navigate} />
+            {this.props.children}
+          </div>
+        );
+      case 'games':
+        return (
+          <div>
+            <GamesHeader />
             {this.props.children}
           </div>
         );

@@ -9,7 +9,7 @@ function action() {
     chunks: ['games'],
     title,
     component: (
-      <Layout>
+      <Layout schema="games">
         <Games />
       </Layout>
     ),

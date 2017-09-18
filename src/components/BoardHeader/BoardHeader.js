@@ -27,8 +27,11 @@ class BoardHeader extends React.Component {
   render() {
     const { isNavigating, navigate } = this.props;
 
-    const PLATFORMS = ['N64', 'Gamecube', 'Wii'];
-    const GAMES = [
+    const FILTERS = [
+      'Unfiltered',
+      'N64',
+      'Gamecube',
+      'Wii',
       'Mario Party 1',
       'Mario Party 2',
       'Mario Party 3',
@@ -39,7 +42,6 @@ class BoardHeader extends React.Component {
       'Mario Party 8',
       'Mario Party 9',
     ];
-    const GAMEMODES = ['Battle Royale', 'Mini-Games', 'Duel', 'Team Battle'];
 
     const actions = [<Button icon>search</Button>];
     const nav =
@@ -50,35 +52,16 @@ class BoardHeader extends React.Component {
     const titleMenu = (
       <div className={s.filterContainer}>
         <SelectField
-          defaultValue={PLATFORMS[0]}
-          id="filterPlatform"
-          key="platform"
-          menuItems={PLATFORMS}
-        />
-        <SelectField
-          defaultValue={GAMES[0]}
-          id="filterGame"
-          key="game"
-          menuItems={GAMES}
-        />
-        <SelectField
-          defaultValue={GAMEMODES[0]}
-          id="filterGamemode"
-          key="gamemode"
-          menuItems={GAMEMODES}
+          defaultValue={FILTERS[0]}
+          id="filtersMenu"
+          key="filters"
+          menuItems={FILTERS}
         />
       </div>
     );
 
     return (
-      <Toolbar
-        actions={actions}
-        colored
-        nav={nav}
-        prominent
-        prominentTitle
-        titleMenu={titleMenu}
-      />
+      <Toolbar actions={actions} colored nav={nav} titleMenu={titleMenu} />
     );
   }
 }
