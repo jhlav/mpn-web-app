@@ -18,6 +18,10 @@ class NumberInput extends React.Component {
   };
 
   onChange = value => {
+    // Allow only numbers - including negative
+    if (!/-?(\d+)/.test(value)) {
+      return;
+    }
     const { label } = this.props;
     const int = parseInt(value, 10);
     if (label === 'MG Coins' && (int < -999 || int > 999)) {
@@ -30,6 +34,11 @@ class NumberInput extends React.Component {
 
   onDecrement = () => {
     const { label, onChange, value } = this.props;
+    // Don't allow empty input, default to 0
+    if (value === '') {
+      onChange('0');
+      return;
+    }
     const int = parseInt(value, 10);
     if (label === 'MG Coins' && int <= -999) {
       return;
@@ -41,6 +50,11 @@ class NumberInput extends React.Component {
 
   onIncrement = () => {
     const { onChange, value } = this.props;
+    // Don't allow empty input, default to 0
+    if (value === '') {
+      onChange('0');
+      return;
+    }
     const int = parseInt(value, 10);
     if (int >= 999) {
       return;
@@ -61,7 +75,7 @@ class NumberInput extends React.Component {
           onChange={this.onChange}
           placeholder="#"
           type="number"
-          value={value}
+          value={value || '0'}
         />
         <Button
           flat

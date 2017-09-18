@@ -15,6 +15,7 @@ import {
 import createDiscordUser from './mutations/createDiscordUser';
 import createGame from './mutations/createGame';
 
+import games from './queries/games';
 import me from './queries/me';
 import news from './queries/news';
 import player from './queries/player';
@@ -24,6 +25,7 @@ const schema = new Schema({
   query: new ObjectType({
     name: 'Query',
     fields: {
+      games,
       me,
       news,
       player,

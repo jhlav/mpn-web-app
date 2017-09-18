@@ -36,6 +36,10 @@ const routes = {
       load: () => import(/* webpackChunkName: 'games' */ './games'),
     },
     {
+      path: '/games/submit',
+      load: () => import(/* webpackChunkName: 'submitGame' */ './games/submit'),
+    },
+    {
       path: '/contact',
       load: () => import(/* webpackChunkName: 'contact' */ './contact'),
     },
@@ -72,7 +76,7 @@ const routes = {
     const route = await next();
 
     // Provide default values for title, description etc.
-    route.title = `${route.title || 'Untitled Page'} - www.reactstarterkit.com`;
+    route.title = `${route.title || 'Untitled Page'} - Mario Party Netplay`;
     route.description = route.description || '';
 
     return route;

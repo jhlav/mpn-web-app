@@ -136,7 +136,7 @@ export const getCharacterImage = character => {
     case 'Yoshi':
       return require('../components/_SharedAssets/p_yoshi.png');
     default:
-      return require('../components/_SharedAssets/mushroom.svg'); // TODO possibly path.resolve()-based logic
+      return require('../components/_SharedAssets/mushroom.svg');
   }
 };
 

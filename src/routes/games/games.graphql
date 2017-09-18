@@ -1,0 +1,22 @@
+query getAllGames {
+  games {
+    id
+    game
+    platform
+    gamemode
+    board
+    date
+    entries {
+      place
+      player {
+        id
+        tag
+        avatarURL
+      }
+      character
+      coins
+      minigameCoins
+      stars
+    }
+  }
+}

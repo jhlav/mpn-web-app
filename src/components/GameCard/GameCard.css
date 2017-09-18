@@ -1,27 +1,164 @@
-.asdf {
-  /* placeholder to pass husky */
+.root {
+  margin: 1.44rem 0;
+  position: relative;
 }
 
-.container {
-  align-content: center;
-  border-radius: 2px;
+.expander {
+  align-items: center;
   display: grid;
-  grid-template-areas:
-    'game characters characters characters characters' 60px
-    'stars s1 s2 s3 s4' 32px
-    'coins c1 c2 c3 c4' 32px
-    'p1 p1 player1 player1 player1' 24px
-    'p2 p2 player2 player2 player2' 24px
-    'p3 p3 player3 player3 player3' 24px
-    'p4 p4 player4 player4 player4' 24px
+  grid-template: 60px / 32px 40px 40px 40px 40px auto;
+  justify-items: center;
+  justify-content: space-between;
+
+  & img:not(:first-of-type) {
+    max-width: 40px;
+  }
+}
+
+.expandable {
+  align-items: center;
+  display: grid;
+  grid-row-gap: 1rem;
+  grid-template:
+    'coins c1 c2 c3 c4' 48px
+    'mgCoins m1 m2 m3 m4' 48px
+    'stars s1 s2 s3 s4' 48px
+    'p1 p1 player1 player1 player1' 60px
+    'p2 p2 player2 player2 player2' 60px
+    'p3 p3 player3 player3 player3' 60px
+    'p4 p4 player4 player4 player4' 60px
     'boardTitle boardTitle board board board' 24px
-    'gamemode gamemode gamemode gamemode gamemode' 24px
+    'gamemodeTitle gamemodeTitle gamemode gamemode gamemode' 24px
     / 1fr 1fr 1fr 1fr 1fr;
-  filter:
-    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.14))
-    drop-shadow(0 1px 5px rgba(0, 0, 0, 0.12))
-    drop-shadow(0 3px 1px rgba(0, 0, 0, 0.2));
-  margin: 1.44rem 0.8rem;
-  position: relative;
   text-align: center;
+}
+
+.time {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+}
+
+.time > span {
+  background-color: white;
+  border-radius: 16px;
+  font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+  padding: 4px 12px;
+}
+
+.coins {
+  grid-area: coins;
+}
+
+.c1 {
+  grid-area: c1;
+}
+
+.c2 {
+  grid-area: c2;
+}
+
+.c3 {
+  grid-area: c3;
+}
+
+.c4 {
+  grid-area: c4;
+}
+
+.mgCoins {
+  grid-area: mgCoins;
+}
+
+.m1 {
+  grid-area: m1;
+}
+
+.m2 {
+  grid-area: m2;
+}
+
+.m3 {
+  grid-area: m3;
+}
+
+.m4 {
+  grid-area: m4;
+}
+
+.stars {
+  grid-area: stars;
+}
+
+.s1 {
+  grid-area: s1;
+}
+
+.s2 {
+  grid-area: s2;
+}
+
+.s3 {
+  grid-area: s3;
+}
+
+.s4 {
+  grid-area: s4;
+}
+
+.coins img,
+.mgCoins img,
+.stars img {
+  max-width: 48px;
+}
+
+.p1 {
+  grid-area: p1;
+}
+
+.player1 {
+  grid-area: player1;
+}
+
+.p2 {
+  grid-area: p2;
+}
+
+.player2 {
+  grid-area: player2;
+}
+
+.p3 {
+  grid-area: p3;
+}
+
+.player3 {
+  grid-area: player3;
+}
+
+.p4 {
+  grid-area: p4;
+}
+
+.player4 {
+  grid-area: player4;
+}
+
+.boardTitle {
+  grid-area: boardTitle;
+}
+
+.board {
+  grid-area: board;
+}
+
+.gamemodeTitle {
+  grid-area: gamemodeTitle;
+}
+
+.gamemode {
+  grid-area: gamemode;
 }

@@ -79,7 +79,7 @@ class GameInputForm extends React.Component {
   };
 
   submitForm = () => {
-    const { board, date, game, entries } = this.props;
+    const { board, client, date, game, entries } = this.props;
     let platform;
     if (/[1-3]$/.test(game)) {
       platform = 'N64';
@@ -88,6 +88,24 @@ class GameInputForm extends React.Component {
     } else if (/[8-9]/.test(game)) {
       platform = 'Wii';
     }
+    const validatePlayers = () => {
+      let isValid = true;
+      entries.forEach(valueObj => {
+        if (!(valueObj.player && valueObj.player.id.length >= 1)) {
+          isValid = false;
+        }
+        return isValid;
+      });
+    };
+    const validateCharacters = () => {
+      let isValid = true;
+      entries.forEach(valueObj => {
+        if (!(valueObj.isCPU && valueObj.character.length < 1)) {
+          isValid = false;
+        }
+        return isValid;
+      });
+    };
     const mappedEntries = [];
     entries.forEach((valueObj, key) => {
       mappedEntries[key - 1] = {
@@ -101,19 +119,21 @@ class GameInputForm extends React.Component {
     });
     // Do we have all four entries?
     if (entries.size === 4) {
-      this.props.client.mutate({
-        mutation: submitGame,
-        variables: {
-          input: {
-            game,
-            gamemode: 'Battle Royale',
-            platform,
-            board,
-            date,
-            entries: mappedEntries,
+      if (validatePlayers && validateCharacters) {
+        client.mutate({
+          mutation: submitGame,
+          variables: {
+            input: {
+              game,
+              gamemode: 'Battle Royale',
+              platform,
+              board,
+              date,
+              entries: mappedEntries,
+            },
           },
-        },
-      });
+        });
+      }
     }
   };
 

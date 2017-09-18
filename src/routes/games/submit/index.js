@@ -1,17 +1,17 @@
 import React from 'react';
 
-import Layout from '../../components/Layout';
-import Games from './Games';
+import Layout from '../../../components/Layout';
+import SubmitGame from './SubmitGame';
 
-const title = 'Games';
+const title = 'Submit a Game';
 
 function action() {
   return {
-    chunks: ['games'],
+    chunks: ['submitGame'],
     title,
     component: (
       <Layout schema="games">
-        <Games />
+        <SubmitGame />
       </Layout>
     ),
   };
