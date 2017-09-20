@@ -56,11 +56,13 @@ class Games extends React.Component {
   };
 
   componentDidMount() {
-    require('webfontloader').load({ // eslint-disable-line
-      google: {
-        families: ['Roboto', 'Roboto Condensed', 'Material Icons'],
-      },
-    });
+    import('webfontloader').then(wfl =>
+      wfl.load({
+        google: {
+          families: ['Roboto', 'Roboto Condensed', 'Material Icons'],
+        },
+      }),
+    );
   }
 
   render() {
