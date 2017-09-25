@@ -4,9 +4,10 @@ import React from 'react';
 import Avatar from 'react-md/lib/Avatars';
 
 export const getBoards = game => {
+  const list = ['Unknown'];
   switch (game) {
     case 'Mario Party 1':
-      return ['Unknown'].concat([
+      return list.concat([
         "Bowser's Magma Mountain",
         "DK's Jungle Adventure",
         'Eternal Star',
@@ -17,7 +18,7 @@ export const getBoards = game => {
         "Yoshi's Tropical Island",
       ]);
     case 'Mario Party 2':
-      return ['Unknown'].concat([
+      return list.concat([
         'Bowser Land',
         'Horror Land',
         'Mystery Land',
@@ -26,7 +27,7 @@ export const getBoards = game => {
         'Western Land',
       ]);
     case 'Mario Party 3':
-      return ['Unknown'].concat([
+      return list.concat([
         'Chilly Waters',
         'Creepy Cavern',
         'Deep Blooper Sea',
@@ -35,7 +36,7 @@ export const getBoards = game => {
         'Woody Woods',
       ]);
     case 'Mario Party 4':
-      return ['Unknown'].concat([
+      return list.concat([
         "Boo's Haunted Bash",
         "Bowser's Gnarly Party",
         "Goomba's Greedy Gala",
@@ -44,7 +45,7 @@ export const getBoards = game => {
         "Toad's Midway Madness",
       ]);
     case 'Mario Party 5':
-      return ['Unknown'].concat([
+      return list.concat([
         'Bowser Nightmare',
         'Future Dream',
         'Pirate Dream',
@@ -54,7 +55,7 @@ export const getBoards = game => {
         'Undersea Dream',
       ]);
     case 'Mario Party 6':
-      return ['Unknown'].concat([
+      return list.concat([
         'Castaway Bay',
         'Clockwork Castle',
         "E. Gadd's Garage",
@@ -63,7 +64,7 @@ export const getBoards = game => {
         'Towering Treetop',
       ]);
     case 'Mario Party 7':
-      return ['Unknown'].concat([
+      return list.concat([
         "Bowser's Enchanted Inferno!",
         'Grand Canal',
         'Neon Heights',
@@ -72,7 +73,7 @@ export const getBoards = game => {
         'Windmillville',
       ]);
     case 'Mario Party 8':
-      return ['Unknown'].concat([
+      return list.concat([
         "Bowser's Warped Orbit",
         "DK's Treetop Temple",
         "Goomba's Booty Boardwalk",
@@ -81,7 +82,7 @@ export const getBoards = game => {
         "Shy Guy's Perplex Express",
       ]);
     case 'Mario Party 9':
-      return ['Unknown'].concat([
+      return list.concat([
         'Blooper Beach',
         'Bob-omb Factory',
         "Boo's Horror Castle",
@@ -91,7 +92,7 @@ export const getBoards = game => {
         'Toad Road',
       ]);
     default:
-      return ['Unknown'];
+      return list;
   }
 };
 
@@ -140,119 +141,205 @@ export const getCharacterImage = character => {
   }
 };
 
-export const characterList = [
+const characterList = [
   {
     name: 'Birdo',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_birdo.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Birdo')} />,
   },
   {
     name: 'Blooper',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_blooper.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Blooper')} />,
   },
   {
     name: 'Boo',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_boo.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Boo')} />,
   },
   {
     name: 'Daisy',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_daisy.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Daisy')} />,
   },
   {
     name: 'Donkey Kong',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_donkeykong.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Donkey Kong')} />,
   },
   {
     name: 'Dry Bones',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_drybones.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Dry Bones')} />,
   },
   {
     name: 'Hammer Bro',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_hammerbro.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Hammer Bro')} />,
   },
   {
     name: 'Kamek',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_kamek.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Kamek')} />,
   },
   {
     name: 'Koopa Kid',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_koopakid.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Koopa Kid')} />,
   },
   {
     name: 'Koopa Troopa',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_koopatroopa.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Koopa Troopa')} />,
   },
   {
     name: 'Luigi',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_luigi.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Luigi')} />,
   },
   {
     name: 'Mario',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_mario.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Mario')} />,
   },
   {
     name: 'Peach',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_peach.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Peach')} />,
   },
   {
     name: 'Shy Guy',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_shyguy.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Shy Guy')} />,
   },
   {
     name: 'Toad',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_toad.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Toad')} />,
   },
   {
     name: 'Toadette',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_toadette.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Toadette')} />,
   },
   {
     name: 'Waluigi',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_waluigi.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Waluigi')} />,
   },
   {
     name: 'Wario',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_wario.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Wario')} />,
   },
   {
     name: 'Yoshi',
-    leftAvatar: (
-      <Avatar src={require('../components/_SharedAssets/p_yoshi.png')} />
-    ),
+    leftAvatar: <Avatar src={getCharacterImage('Yoshi')} />,
   },
 ];
+
+export const getCharacters = game => {
+  const list = [];
+  switch (game) {
+    case 'Mario Party 1':
+      return list.concat([
+        characterList[4],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[17],
+        characterList[18],
+      ]);
+    case 'Mario Party 2':
+      return list.concat([
+        characterList[3],
+        characterList[4],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[16],
+        characterList[17],
+        characterList[18],
+      ]);
+    case 'Mario Party 3':
+      return list.concat([
+        characterList[3],
+        characterList[4],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[16],
+        characterList[17],
+        characterList[18],
+      ]);
+    case 'Mario Party 4':
+      return list.concat([
+        characterList[3],
+        characterList[4],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[16],
+        characterList[17],
+        characterList[18],
+      ]);
+    case 'Mario Party 5':
+      return list.concat([
+        characterList[2],
+        characterList[3],
+        characterList[8],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[14],
+        characterList[16],
+        characterList[17],
+        characterList[18],
+      ]);
+    case 'Mario Party 6':
+      return list.concat([
+        characterList[2],
+        characterList[3],
+        characterList[8],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[14],
+        characterList[15],
+        characterList[16],
+        characterList[17],
+        characterList[18],
+      ]);
+    case 'Mario Party 7':
+      return list.concat([
+        characterList[0],
+        characterList[2],
+        characterList[3],
+        characterList[5],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[14],
+        characterList[15],
+        characterList[16],
+        characterList[17],
+        characterList[18],
+      ]);
+    case 'Mario Party 8':
+      return list.concat([
+        characterList[0],
+        characterList[1],
+        characterList[2],
+        characterList[3],
+        characterList[5],
+        characterList[6],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[14],
+        characterList[15],
+        characterList[16],
+        characterList[17],
+        characterList[18],
+      ]);
+    case 'Mario Party 9':
+      return list.concat([
+        characterList[0],
+        characterList[3],
+        characterList[7],
+        characterList[9],
+        characterList[10],
+        characterList[11],
+        characterList[12],
+        characterList[13],
+        characterList[14],
+        characterList[16],
+        characterList[17],
+        characterList[18],
+      ]);
+    default:
+      return characterList;
+  }
+};

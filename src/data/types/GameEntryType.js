@@ -13,14 +13,15 @@ const GameEntryType = new ObjectType({
   name: 'GameEntry',
   fields: {
     place: { type: new NonNull(Integer) },
-    character: { type: new NonNull(StringType) },
+    character: { type: StringType },
     coins: { type: new NonNull(Integer) },
-    minigameCoins: { type: new NonNull(Integer) },
+    minigameCoins: { type: Integer },
     stars: { type: new NonNull(Integer) },
     player: {
       type: DiscordUserType,
       resolve: resolver(GameEntry.DiscordUser),
     },
+    guestIndex: { type: Integer },
   },
 });
 

@@ -3,6 +3,7 @@
 import {
   SELECT_GAME,
   GET_BOARDS_FOR_SELECTED_GAME,
+  GET_CHARACTERS_FOR_SELECTED_GAME,
   SELECT_BOARD,
   SELECT_DATE,
   ENTRY_SELECT_PLAYER,
@@ -17,6 +18,7 @@ import {
 export const selectGame = game => dispatch => {
   dispatch({ type: SELECT_GAME, payload: { game } });
   dispatch({ type: GET_BOARDS_FOR_SELECTED_GAME, payload: { game } });
+  dispatch({ type: GET_CHARACTERS_FOR_SELECTED_GAME, payload: { game } });
 };
 
 export const selectBoard = board => ({

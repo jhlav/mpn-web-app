@@ -3,7 +3,7 @@ import Model from '../sequelize';
 
 const GameEntry = Model.define('GameEntry', {
   place: {
-    type: DataType.INTEGER(2),
+    type: DataType.INTEGER,
   },
 
   character: {
@@ -11,15 +11,19 @@ const GameEntry = Model.define('GameEntry', {
   },
 
   coins: {
-    type: DataType.INTEGER(10),
+    type: DataType.INTEGER,
   },
 
   minigameCoins: {
-    type: DataType.INTEGER(10),
+    type: DataType.INTEGER,
   },
 
   stars: {
-    type: DataType.INTEGER(10),
+    type: DataType.INTEGER,
+  },
+
+  guestIndex: {
+    type: DataType.INTEGER,
   },
 });
 

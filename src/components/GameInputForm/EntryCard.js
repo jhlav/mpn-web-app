@@ -12,7 +12,6 @@ import FontIcon from 'react-md/lib/FontIcons';
 import SelectField from 'react-md/lib/SelectFields';
 import Switch from 'react-md/lib/SelectionControls/Switch';
 
-import { characterList } from '../../constants/marioParty';
 import NumberInput from '../NumberInput';
 import s from './EntryCard.css';
 
@@ -25,16 +24,22 @@ import {
   entrySetMinigameCoins as setMGCoins,
 } from '../../actions/gameInputForm';
 
-@connect(null, dispatch => ({
-  toggleCPU: (entryId, isCPU) => dispatch(toggleCPU(entryId, isCPU)),
-  selectCharacter: (entryId, character) =>
-    dispatch(selectCharacter(entryId, character)),
-  selectPlayer: (entryId, playerTag) =>
-    dispatch(selectPlayer(entryId, playerTag)),
-  setStars: (entryId, stars) => dispatch(setStars(entryId, stars)),
-  setCoins: (entryId, coins) => dispatch(setCoins(entryId, coins)),
-  setMGCoins: (entryId, mgCoins) => dispatch(setMGCoins(entryId, mgCoins)),
-}))
+@connect(
+  state => ({
+    charactersAvailable: state.gameInputForm.charactersAvailable,
+  }),
+  dispatch => ({
+    toggleCPU: (entryId, isCPU) => dispatch(toggleCPU(entryId, isCPU)),
+    selectCharacter: (entryId, character) =>
+      dispatch(selectCharacter(entryId, character)),
+    selectPlayer: (entryId, playerTag) =>
+      dispatch(selectPlayer(entryId, playerTag)),
+    setStars: (entryId, stars) => dispatch(setStars(entryId, stars)),
+    setCoins: (entryId, coins) => dispatch(setCoins(entryId, coins)),
+    setMGCoins: (entryId, mgCoins) => dispatch(setMGCoins(entryId, mgCoins)),
+  }),
+)
+@withStyles(s)
 class EntryCard extends Component {
   static defaultProps = {
     character: '',
@@ -52,6 +57,12 @@ class EntryCard extends Component {
 
   static propTypes = {
     character: PropTypes.string,
+    charactersAvailable: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        leftAvatar: PropTypes.node,
+      }),
+    ).isRequired,
     coins: PropTypes.string,
     imageURI: PropTypes.string,
     isCPU: PropTypes.bool,
@@ -125,6 +136,7 @@ class EntryCard extends Component {
   render() {
     const {
       character,
+      charactersAvailable,
       coins,
       imageURI,
       isCPU,
@@ -180,11 +192,12 @@ class EntryCard extends Component {
         <div className={s.charSelect}>
           <SelectField
             disabled={isCPU}
+            helpText="Select a game first"
             id={`characters-${place}`}
             itemLabel="name"
             itemValue="name"
             label="Character"
-            menuItems={characterList}
+            menuItems={charactersAvailable}
             onChange={value => this.props.selectCharacter(place, value)}
             placeholder="Select a character"
             value={character}
@@ -231,4 +244,4 @@ class EntryCard extends Component {
   }
 }
 
-export default withStyles(s)(EntryCard);
+export default EntryCard;

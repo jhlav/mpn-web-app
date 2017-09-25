@@ -14,6 +14,7 @@ import CardTitle from 'react-md/lib/Cards/CardTitle';
 import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import Divider from 'react-md/lib/Dividers';
 import FontIcon from 'react-md/lib/FontIcons';
+import IconSeparator from 'react-md/lib/Helpers/IconSeparator';
 import SelectField from 'react-md/lib/SelectFields/SelectField';
 
 import submitGame from './submitGame.graphql';
@@ -211,35 +212,50 @@ class GameInputForm extends React.Component {
             />
           </div>
           <div className={s.gameInputs}>
-            <SelectField
-              defaultValue="Battle Royale"
-              disabled
-              helpOnFocus
-              helpText="Select a gamemode"
-              id="selectGamemode"
-              label="Battle Royale"
-              placeholder="Select a gamemode"
-              value="Battle Royale"
-            />
-            <SelectField
-              defaultValue={this.props.boardsAvailable[0]}
-              helpOnFocus
-              helpText="Select a board"
-              id="selectBoard"
-              itemLabel="name"
-              itemValue="name"
-              label="Board"
-              menuItems={this.props.boardsAvailable}
-              onChange={value => this.props.selectBoard(value)}
-              placeholder="Select a board"
-            />
             <DatePicker
+              autoOk
               defaultValue={this.props.date}
               displayMode="portrait"
               id="selectDate"
               label="Select a date"
+              maxDate={new Date()}
               onChange={value => this.props.selectDate(value)}
             />
+            <IconSeparator
+              iconBefore
+              label={
+                <SelectField
+                  defaultValue="Battle Royale"
+                  disabled
+                  helpOnFocus
+                  helpText="Select a gamemode"
+                  id="selectGamemode"
+                  label="Battle Royale"
+                  placeholder="Select a gamemode"
+                  value="Battle Royale"
+                />
+              }
+            >
+              <FontIcon>videogame_asset</FontIcon>
+            </IconSeparator>
+            <IconSeparator
+              iconBefore
+              label={
+                <SelectField
+                  defaultValue={this.props.boardsAvailable[0]}
+                  helpText="Select a game first"
+                  id="selectBoard"
+                  itemLabel="name"
+                  itemValue="name"
+                  label="Board"
+                  menuItems={this.props.boardsAvailable}
+                  onChange={value => this.props.selectBoard(value)}
+                  placeholder="Select a board"
+                />
+              }
+            >
+              <FontIcon>grain</FontIcon>
+            </IconSeparator>
           </div>
         </div>
         <Divider />

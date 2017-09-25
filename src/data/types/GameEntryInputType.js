@@ -23,7 +23,7 @@ const GameEntryInputType = new NonNull(
         description: 'How many coins the player earned from the board.',
       },
       minigameCoins: {
-        type: new NonNull(Integer),
+        type: Integer,
         description: 'How many coins the player earned from minigames.',
       },
       stars: {
@@ -33,6 +33,11 @@ const GameEntryInputType = new NonNull(
       playerId: {
         type: new NonNull(StringType),
         description: "The player's unique Discord ID.",
+      },
+      guestIndex: {
+        type: Integer,
+        description:
+          'null|2|3 - Used to distinguish guests of players, i.e if someone has a friend over.',
       },
     },
   }),

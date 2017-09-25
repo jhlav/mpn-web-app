@@ -1,6 +1,7 @@
 import {
   SELECT_GAME,
   GET_BOARDS_FOR_SELECTED_GAME,
+  GET_CHARACTERS_FOR_SELECTED_GAME,
   SELECT_BOARD,
   SELECT_DATE,
   ENTRY_SELECT_PLAYER,
@@ -11,12 +12,17 @@ import {
   ENTRY_SET_COINS,
   ENTRY_SET_MINIGAME_COINS,
 } from '../constants';
-import { getBoards, getCharacterImage } from '../constants/marioParty';
+import {
+  getBoards,
+  getCharacters,
+  getCharacterImage,
+} from '../constants/marioParty';
 
 const initialState = {
   game: '',
   board: '',
   boardsAvailable: ['Unknown'],
+  charactersAvailable: [''],
   date: new Date(),
   entries: new Map(),
 };
@@ -44,6 +50,11 @@ export default function gameInputForm(state = initialState, action) {
       return {
         ...state,
         boardsAvailable: getBoards(action.payload.game),
+      };
+    case GET_CHARACTERS_FOR_SELECTED_GAME:
+      return {
+        ...state,
+        charactersAvailable: getCharacters(action.payload.game),
       };
     case SELECT_BOARD:
       return {
