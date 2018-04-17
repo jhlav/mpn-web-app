@@ -12,31 +12,41 @@ import {
   GraphQLObjectType as ObjectType,
 } from 'graphql';
 
+import addGuildMembers from './mutations/addGuildMembers';
+import createDiscordGuild from './mutations/createDiscordGuild';
 import createDiscordUser from './mutations/createDiscordUser';
 import createGame from './mutations/createGame';
+import createPlatform from './mutations/createPlatform';
 
 import games from './queries/games';
+import guild from './queries/guild';
 import me from './queries/me';
 import news from './queries/news';
 import player from './queries/player';
 import players from './queries/players';
+import user from './queries/user';
 
 const schema = new Schema({
   query: new ObjectType({
     name: 'Query',
     fields: {
       games,
+      guild,
       me,
       news,
       player,
       players,
+      user,
     },
   }),
   mutation: new ObjectType({
     name: 'Mutation',
     fields: {
+      addGuildMembers,
+      createDiscordGuild,
       createDiscordUser,
       createGame,
+      createPlatform,
     },
   }),
 });

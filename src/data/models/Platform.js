@@ -1,12 +1,12 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const Game = Model.define(
-  'Game',
+const Platform = Model.define(
+  'Platform',
   {
     id: {
       type: DataType.UUID,
-      defaultValue: DataType.UUIDV4,
+      defaultValue: DataType.UUIDV1,
       primaryKey: true,
     },
 
@@ -19,4 +19,4 @@ const Game = Model.define(
   },
 );
 
-export default Game;
+export default Platform;

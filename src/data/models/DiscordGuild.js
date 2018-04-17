@@ -1,12 +1,11 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const Game = Model.define(
-  'Game',
+const DiscordGuild = Model.define(
+  'DiscordGuild',
   {
     id: {
-      type: DataType.UUID,
-      defaultValue: DataType.UUIDV4,
+      type: DataType.STRING(50),
       primaryKey: true,
     },
 
@@ -19,4 +18,4 @@ const Game = Model.define(
   },
 );
 
-export default Game;
+export default DiscordGuild;

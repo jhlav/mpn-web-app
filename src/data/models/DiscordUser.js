@@ -18,12 +18,8 @@ const DiscordUser = Model.define(
       primaryKey: true,
     },
 
-    avatarURL: {
+    avatar: {
       type: DataType.TEXT,
-    },
-
-    nickname: {
-      type: DataType.STRING(100),
     },
 
     tag: {
@@ -31,7 +27,7 @@ const DiscordUser = Model.define(
     },
   },
   {
-    indexes: [{ fields: ['nickname', 'tag'] }],
+    indexes: [{ fields: ['tag'] }],
   },
 );
 

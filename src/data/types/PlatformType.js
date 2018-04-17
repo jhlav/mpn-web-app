@@ -7,19 +7,19 @@ import {
 } from 'graphql';
 import { resolver } from 'graphql-sequelize';
 
-import { Game } from '../models';
-import PlatformType from './PlatformType';
+import { Platform } from '../models';
+import GameType from './GameType';
 
-const GameType = new ObjectType({
-  name: 'Game',
+const PlatformType = new ObjectType({
+  name: 'Platform',
   fields: () => ({
     id: { type: new NonNull(ID) },
     name: { type: new NonNull(StringType) },
-    platforms: {
-      type: new List(PlatformType),
-      resolve: resolver(Game.Platforms),
+    games: {
+      type: new List(GameType),
+      resolve: resolver(Platform.Games),
     },
   }),
 });
 
-export default GameType;
+export default PlatformType;

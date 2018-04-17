@@ -1,26 +1,62 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import sequelize from '../sequelize';
+import DiscordGuild from './DiscordGuild';
 import DiscordUser from './DiscordUser';
 import Game from './Game';
-import GameEntry from './GameEntry';
+import Member from './Member';
+import Platform from './Platform';
+import Record from './Record';
 import User from './User';
 import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
 
-Game.GameEntries = Game.hasMany(GameEntry);
-GameEntry.Game = GameEntry.belongsTo(Game);
+Game.Platforms = Game.belongsToMany(Platform, {
+  through: 'GamePlatform', // join table 'GamePlatform'
+  foreignKey: {
+    name: 'gameId', // foreign key of Game
+    field: 'game_id', // primary key of Platform
+  },
+});
 
-DiscordUser.GameEntries = DiscordUser.hasMany(GameEntry);
-GameEntry.DiscordUser = GameEntry.belongsTo(DiscordUser);
+Platform.Games = Platform.belongsToMany(Game, {
+  through: 'GamePlatform', // join table
+  foreignKey: {
+    name: 'platformId', // foreign key
+    field: 'platform_id', // primary key
+  },
+});
+
+// Record will have a column 'game' which relates to a Game
+Record.Game = Record.belongsTo(Game, {
+  foreignKey: 'game',
+});
+
+Record.hasMany(DiscordUser, {
+  foreignKey: 'recordId',
+  as: 'players',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
+DiscordGuild.Users = DiscordGuild.belongsToMany(DiscordUser, {
+  through: Member, // join table
+  foreignKey: {
+    name: 'guildId', // foreign key
+    field: 'guild_id', // primary key
+  },
+});
+// DiscordGuild will have a column 'owner' which relates to a DiscordUser
+DiscordGuild.Owner = DiscordGuild.belongsTo(DiscordUser, {
+  foreignKey: 'owner',
+});
+
+DiscordUser.Guilds = DiscordUser.belongsToMany(DiscordGuild, {
+  through: Member, // join table
+  foreignKey: {
+    name: 'userId', // foreign key
+    field: 'user_id', // primary key
+  },
+});
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',
@@ -49,9 +85,12 @@ function sync(...args) {
 
 export default { sync };
 export {
+  DiscordGuild,
   DiscordUser,
   Game,
-  GameEntry,
+  Member,
+  Platform,
+  Record,
   User,
   UserLogin,
   UserClaim,
