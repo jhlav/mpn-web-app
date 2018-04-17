@@ -57,6 +57,9 @@
 
 .avatar {
   border-radius: 50%;
+  display: flex;
+  place-items: center;
+  text-align: center;
   height: 128px;
   width: 128px;
 }
