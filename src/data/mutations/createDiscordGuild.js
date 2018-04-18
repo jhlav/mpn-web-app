@@ -1,16 +1,14 @@
+/* eslint-disable no-console */
+
 import {
   GraphQLInputObjectType as InputObjectType,
   GraphQLNonNull as NonNull,
   GraphQLString as StringType,
 } from 'graphql';
-// import uuid from 'node-uuid';
-// import validator from 'validator';
 
-import { DiscordGuild } from '../models';
+import { DiscordGuild, DiscordUser } from '../models';
 import DiscordGuildType from '../types/DiscordGuildType';
 import formatErrors from '../formatErrors';
-import sequelize from '../sequelize';
-// import ValidationError from '../../core/ValidationError';
 
 const createDiscordGuild = {
   type: DiscordGuildType,
@@ -39,36 +37,50 @@ const createDiscordGuild = {
   },
   async resolve(_, args) {
     const { input } = args;
-    let dataValues = {};
+    // let dataValues = {};
 
     try {
-      const response = await sequelize.transaction(async () => {
-        const guild = DiscordGuild.findOrCreate(
-          {
-            defaults: {
-              id: input.id,
-              name: input.name,
-              owner: input.owner,
-            },
-            where: { id: input.id },
-          },
-          // { raw: true },
-        ).spread(res => {
-          dataValues = { ...res.dataValues };
-        });
-        return guild;
-      });
+      // Check if it exists first to prevent errors
+      const findGuild = DiscordGuild.findById(input.id);
 
-      return {
-        ok: true,
-        guild: response,
-        ...dataValues,
-      };
+      // The guild was found
+      if (findGuild) {
+        // Update the name if it changed
+        if (findGuild.get('name') !== input.name) {
+          DiscordGuild.set('name', input.name);
+        }
+        // This guild already existed and is updated; exit
+        return {
+          ...input,
+        };
+      }
+      console.log('This should not have run but did');
+
+      const findOwner = DiscordUser.findById(input.owner);
+
+      if (!findOwner) {
+        console.log('The guild owner was not found.  Submit that user first.');
+        // TODO Implement proper error handling
+        return {};
+      }
+
+      // This guild did not exist, create it
+      const guild = DiscordGuild.create(
+        {
+          id: input.id,
+          name: input.name,
+          owner: input.owner,
+        },
+        {
+          include: [DiscordUser],
+        },
+      ).then(res => ({
+        ...res.dataValues,
+      }));
+
+      return guild;
     } catch (error) {
-      return {
-        ok: false,
-        errors: formatErrors(error, { DiscordGuild }),
-      };
+      return formatErrors(error, { DiscordGuild });
     }
   },
 };

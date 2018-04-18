@@ -1,16 +1,15 @@
+/* eslint-disable no-console */
+
 import {
   GraphQLInputObjectType as InputObjectType,
   GraphQLList as List,
   GraphQLNonNull as NonNull,
   GraphQLString as StringType,
 } from 'graphql';
-// import uuid from 'node-uuid';
-// import validator from 'validator';
 
-import { DiscordUser, Member } from '../models';
+import { DiscordGuild, DiscordUser, Member } from '../models';
 import MemberType from '../types/MemberType';
 import formatErrors from '../formatErrors';
-// import ValidationError from '../../core/ValidationError';
 
 const addGuildMembers = {
   type: new List(MemberType),
@@ -35,48 +34,36 @@ const addGuildMembers = {
   },
   async resolve(_, args) {
     const { input } = args;
-    let dataValues = {};
 
     try {
-      const usersToAddPromise = input.members.map(memberId =>
-        DiscordUser.findOne({ where: { id: memberId } }).then(res => {
-          dataValues = { ...dataValues, ...res.dataValues };
-        }),
-      );
+      const response = [];
+      const findGuild = DiscordGuild.findById(input.guildId);
 
-      const [usersToAdd] = await Promise.all([usersToAddPromise]);
-
-      // Handle promise error
-      if (!usersToAdd) {
-        return {
-          ok: false,
-          errors: [
-            {
-              path: 'id',
-              message: 'Some IDs could not be found when adding users.',
-            },
-          ],
-        };
+      if (!findGuild) {
+        return formatErrors(
+          null,
+          'The guild does not exist.  Create it first.',
+        );
       }
       // Add the guild and all its users to the Member join table
-      await input.members.map(memberId =>
-        Member.create({
-          userId: memberId,
-          guildId: input.guildId,
-        }).then(res => {
-          dataValues = { ...dataValues, ...res.dataValues };
-        }),
+      await input.members.map(userId =>
+        // const findUser
+        Member.create(
+          {
+            userId,
+            guildId: input.guildId,
+          },
+          {
+            include: [DiscordGuild, DiscordUser],
+          },
+        ).then(res => response.push(res.dataValues)),
       );
 
-      return {
-        ok: true,
-        ...dataValues,
-      };
+      console.log(response);
+
+      return response;
     } catch (error) {
-      return {
-        ok: false,
-        errors: formatErrors(error, { DiscordUser, Member }),
-      };
+      return formatErrors(error, { DiscordUser, Member });
     }
   },
 };
