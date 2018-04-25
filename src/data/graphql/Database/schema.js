@@ -1,5 +1,7 @@
 import { merge } from 'lodash';
 
+// TODO add Game and Platform to this schema
+
 /** * Queries ** */
 import {
   schema as GetAllUsers,

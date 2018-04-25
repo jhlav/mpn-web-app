@@ -8,6 +8,13 @@ import {
 } from './graphql/News/schema';
 
 import {
+  schema as DiscordSchema,
+  resolvers as DiscordResolvers,
+  mutations as DiscordMutations,
+  queries as DiscordQueries,
+} from './graphql/Discord/schema';
+
+import {
   schema as DatabaseSchema,
   resolvers as DatabaseResolvers,
   mutations as DatabaseMutations,
@@ -27,6 +34,7 @@ const RootQuery = [
   # 3. Automatically [stitch multiple schemas together](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html) into one larger API
   type RootQuery {
     ${NewsQueries}
+    ${DiscordQueries}
     ${DatabaseQueries}
   }
 `,
@@ -44,6 +52,7 @@ const Mutation = [
   # 2. [Mock your GraphQL API](https://www.apollographql.com/docs/graphql-tools/mocking.html) with fine-grained per-type mocking
   # 3. Automatically [stitch multiple schemas together](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html) into one larger API
   type Mutation {
+    ${DiscordMutations}
     ${DatabaseMutations}
   }
 `,
@@ -60,7 +69,7 @@ const SchemaDefinition = [
 
 // Merge all of the resolver objects together
 // Put schema together into one array of schema strings
-const resolvers = merge(NewsResolvers, DatabaseResolvers);
+const resolvers = merge(NewsResolvers, DiscordResolvers, DatabaseResolvers);
 
 const schema = [
   ...SchemaDefinition,
@@ -68,6 +77,7 @@ const schema = [
   ...Mutation,
 
   ...NewsSchema,
+  ...DiscordSchema,
   ...DatabaseSchema,
 ];
 

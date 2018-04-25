@@ -121,8 +121,8 @@ const config = {
             // https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types
             ...(isDebug ? [] : ['transform-react-remove-prop-types']),
             // Adds support for ES7 decorators
-            // https://www.npmjs.com/package/babel-plugin-transform-decorators
-            'transform-decorators',
+            // https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy
+            'transform-decorators-legacy',
           ],
         },
       },
