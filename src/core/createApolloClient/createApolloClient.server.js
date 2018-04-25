@@ -1,47 +1,29 @@
-import { validate, execute, specifiedRules } from 'graphql';
+// @flow
 
-import ApolloClient from 'apollo-client';
+import { ApolloClient } from 'apollo-client';
+import { from } from 'apollo-link';
+import { onError } from 'apollo-link-error';
+import { SchemaLink } from 'apollo-link-schema';
+import createCache from './createCache';
 
-// Execute all GraphQL requests directly without
-class ServerInterface {
-  constructor(optionsData) {
-    this.schema = optionsData.schema;
-    this.optionsData = optionsData;
-  }
+export default function createApolloClient(schema) {
+  const link = from([
+    onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors)
+        graphQLErrors.map(({ message, locations, path }) =>
+          console.warn(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+          ),
+        );
+      if (networkError) console.warn(`[Network error]: ${networkError}`);
+    }),
+    new SchemaLink({ ...schema }),
+  ]);
 
-  async query({ query, variables, operationName }) {
-    try {
-      let validationRules = specifiedRules;
-      const customValidationRules = this.optionsData.validationRules;
-      if (customValidationRules) {
-        validationRules = validationRules.concat(customValidationRules);
-      }
-
-      const validationErrors = validate(this.schema, query, validationRules);
-      if (validationErrors.length > 0) {
-        return { errors: validationErrors };
-      }
-
-      const result = await execute(
-        this.schema,
-        query,
-        this.optionsData.rootValue,
-        this.optionsData.context,
-        variables,
-        operationName,
-      );
-
-      return result;
-    } catch (contextError) {
-      return { errors: [contextError] };
-    }
-  }
-}
-
-export default function createApolloClient(options) {
   return new ApolloClient({
-    reduxRootSelector: state => state.apollo,
-    networkInterface: new ServerInterface(options),
+    link,
+    cache: createCache(),
+    ssrMode: true,
     queryDeduplication: true,
   });
 }

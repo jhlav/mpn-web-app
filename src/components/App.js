@@ -18,6 +18,8 @@ const ContextType = {
   insertCss: PropTypes.func.isRequired,
   // Universal HTTP client
   fetch: PropTypes.func.isRequired,
+  pathname: PropTypes.string.isRequired,
+  query: PropTypes.object,
   // Integrate Redux
   // http://redux.js.org/docs/basics/UsageWithReact.html
   ...ReduxProvider.childContextTypes,
@@ -65,9 +67,7 @@ class App extends React.PureComponent {
     // NOTE: If you need to add or modify header, footer etc. of the app,
     // please do that inside the Layout component.
     return (
-      <ApolloProvider client={client}>
-        {this.props.children}
-      </ApolloProvider>
+      <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
     );
   }
 }

@@ -7,18 +7,10 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import UserType from '../types/UserType';
-
-const me = {
-  type: UserType,
-  resolve({ request }) {
-    return (
-      request.user && {
-        id: request.user.id,
-        email: request.user.email,
-      }
-    );
-  },
+// Prettier configuration
+// https://prettier.io/docs/en/configuration.html
+module.exports = {
+  printWidth: 80,
+  singleQuote: true,
+  trailingComma: 'all',
 };
-
-export default me;
