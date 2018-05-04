@@ -40,8 +40,8 @@ export const resolvers = {
         }
 
         // Update the guild's owner if it changed
-        if (lookupGuild.getOwner() !== args.guild.ownerId) {
-          lookupGuild.setOwner(args.guild.ownerId);
+        if (lookupGuild.get('owner') !== args.guild.ownerId) {
+          lookupGuild.set('owner', args.guild.ownerId);
         }
 
         // eslint-disable-next-line no-throw-literal

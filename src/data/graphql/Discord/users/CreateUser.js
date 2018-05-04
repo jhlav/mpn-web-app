@@ -29,16 +29,28 @@ export const mutation = [
 export const resolvers = {
   Mutation: {
     async discordCreateUser(parent, args) {
+      const { id, tag, avatar } = args.user;
+
       // If user already exists, throw error
-      const lookupUser = await DiscordUser.findById(args.user.id);
+      const lookupUser = await DiscordUser.findById(id);
 
       if (lookupUser) {
+        // Check difference of tag or avatar
+        if (
+          lookupUser.get('tag') !== tag ||
+          lookupUser.get('avatar') !== avatar
+        ) {
+          // Update the user with new value(s)
+          const user = await DiscordUser.upsert({ ...args.user });
+
+          return user && { dataValues: args.user };
+        }
         // eslint-disable-next-line no-throw-literal
         throw 'User already exists!';
       }
 
       // Create or update new Discord user in database
-      const user = await DiscordUser.upsert(
+      const user = await DiscordUser.create(
         {
           ...args.user,
         },
