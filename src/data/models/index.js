@@ -47,7 +47,10 @@ DiscordGuild.Users = DiscordGuild.belongsToMany(DiscordUser, {
 });
 // DiscordGuild will have a column 'owner' which relates to a DiscordUser
 DiscordGuild.Owner = DiscordGuild.belongsTo(DiscordUser, {
-  foreignKey: 'owner',
+  foreignKey: {
+    name: 'ownerId',
+    field: 'owner_id',
+  },
 });
 
 DiscordUser.Guilds = DiscordUser.belongsToMany(DiscordGuild, {

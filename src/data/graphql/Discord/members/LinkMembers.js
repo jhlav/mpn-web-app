@@ -2,29 +2,26 @@
 import { DiscordGuild, DiscordUser, Member } from 'data/models';
 // TODO complete this
 
-// export const schema = [
-//   `
-//   # Member data for associating local Discord users to a Discord guild
-//   input MembersInput {
-//     # The ID of the guild to add members to
-//     guildId: String!
-//
-//     # An array of each user ID to add to the guild
-//     members: [String]!
-//   }
-// `,
-// ];
-
-export const mutations = [
+export const schema = [
   `
-  # Creates associations between Discord users and a guild
-  discordAddMembersToGuild(
+  # Member data for associating local Discord users to a Discord guild
+  input AddMembersInput {
     # The ID of the guild to add members to
     guildId: String!
 
     # An array of each user ID to add to the guild
     members: [String]!
-  ): Members
+  }
+`,
+];
+
+export const mutation = [
+  `
+  # Creates associations between Discord users and a guild
+  discordAddMembersToGuild(
+    # Contains guild ID and array of member IDs to add
+    input: AddMembersInput!
+  ): [DiscordUser]
 `,
 ];
 
@@ -46,13 +43,10 @@ export const resolvers = {
           throw `User with ID "${userId}" not found.  Create this user first with "discordCreateUser()"!`;
         }
 
-        const member = Member.create(
-          {
-            guildId,
-            userId,
-          },
-          { include: [DiscordGuild, DiscordUser] },
-        );
+        const member = Member.create({
+          guildId,
+          userId,
+        });
 
         return member;
       });

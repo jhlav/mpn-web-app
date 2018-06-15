@@ -23,21 +23,28 @@ import {
   mutation as CreateUser,
   resolvers as CreateUserResolver,
 } from './users/CreateUser';
+import {
+  schema as LinkMembersInput,
+  mutation as LinkMembers,
+  resolvers as LinkMembersResolver,
+} from './members/LinkMembers';
 
 export const schema = [
   ...GetAllGuilds,
   ...GetAllUsers,
   ...CreateGuildInput,
   ...CreateUserInput,
+  ...LinkMembersInput,
 ];
 
 export const queries = [...GetAllGuildsQueries, ...GetAllUsersQueries];
 
-export const mutations = [...CreateGuild, ...CreateUser];
+export const mutations = [...CreateGuild, ...CreateUser, ...LinkMembers];
 
 export const resolvers = merge(
   GetAllGuildsResolver,
   GetAllUsersResolver,
   CreateGuildResolver,
   CreateUserResolver,
+  LinkMembersResolver,
 );

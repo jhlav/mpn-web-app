@@ -1,4 +1,4 @@
-import { DiscordGuild, DiscordUser } from 'data/models';
+import { DiscordGuild } from 'data/models';
 
 export const schema = [
   `
@@ -40,8 +40,8 @@ export const resolvers = {
         }
 
         // Update the guild's owner if it changed
-        if (lookupGuild.get('owner') !== args.guild.ownerId) {
-          lookupGuild.set('owner', args.guild.ownerId);
+        if (lookupGuild.get('ownerId') !== args.guild.ownerId) {
+          lookupGuild.set('ownerId', args.guild.ownerId);
         }
 
         // eslint-disable-next-line no-throw-literal
@@ -49,17 +49,7 @@ export const resolvers = {
       }
 
       // Create or update new Discord user in database
-      const guild = await DiscordGuild.create(
-        {
-          guild: {
-            ...args.guild,
-            owner: args.guild.ownerId,
-          },
-        },
-        {
-          include: [{ model: DiscordUser, as: 'owner' }],
-        },
-      );
+      const guild = await DiscordGuild.create({ ...args.guild });
 
       return guild;
     },
